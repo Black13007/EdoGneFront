@@ -1,0 +1,236 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h2 class="register-title">Créer un compte</h2>
+      <div class="register-switch">
+        <button type="button"
+                class="btn-switch"
+                [class.active]="isEmploye"
+                (click)="switchType(true)">Employé</button>
+        <button type="button"
+                class="btn-switch"
+                [class.active]="!isEmploye"
+                (click)="switchType(false)">Employeur</button>
+      </div>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step-item" [class.active]="currentStep >= 1" [class.completed]="currentStep > 1" (click)="goToStep(1)">
+        <div class="step-number">1</div>
+        <div class="step-label">Informations personnelles</div>
+      </div>
+      <div class="step-line" [class.completed]="currentStep > 1"></div>
+      <div class="step-item" [class.active]="currentStep >= 2" [class.completed]="currentStep >= 2">
+        <div class="step-number">2</div>
+        <div class="step-label">Informations professionnelles</div>
+      </div>
+    </div>
+
+    <div class="alert alert-info mb-3">
+      <i class="bi bi-info-circle me-2"></i>
+      <strong>Note :</strong> Vous pourrez compléter votre profil (adresse, bio, documents, etc.) après la création de votre compte.
+    </div>
+
+    <!-- Formulaire Employé -->
+    <form *ngIf="isEmploye" (ngSubmit)="currentStep === 2 ? submitEmploye() : nextStep()" class="register-form">
+      <div *ngIf="currentStep === 1" class="step-content">
+        <h3 class="step-title">
+          <i class="bi bi-person-circle me-2"></i>Informations personnelles
+        </h3>
+        <div class="row">
+          <div class="col">
+            <input type="text"
+                   [(ngModel)]="employe.nom"
+                   name="nomEmp"
+                   required
+                   placeholder="Nom"
+                   class="form-control" />
+          </div>
+          <div class="col">
+            <input type="text"
+                   [(ngModel)]="employe.prenom"
+                   name="prenomEmp"
+                   required
+                   placeholder="Prénom"
+                   class="form-control" />
+          </div>
+        </div>
+        <input type="email"
+               [(ngModel)]="employe.email"
+               name="emailEmp"
+               required
+               placeholder="Email"
+               class="form-control" />
+        <input type="text"
+               [(ngModel)]="employe.telephone"
+               name="telephoneEmp"
+               required
+               placeholder="Téléphone"
+               class="form-control" />
+        <input type="password"
+               [(ngModel)]="employe.password"
+               name="passwordEmp"
+               required
+               placeholder="Mot de passe"
+               class="form-control" />
+      </div>
+
+      <div *ngIf="currentStep === 2" class="step-content">
+        <h3 class="step-title">
+          <i class="bi bi-briefcase me-2"></i>Informations professionnelles
+        </h3>
+        <p class="text-muted mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Ces informations sont nécessaires pour créer votre compte. Vous pourrez compléter votre profil plus tard.
+        </p>
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-briefcase me-1"></i>Domaine principal d'activité <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 [(ngModel)]="employe.domainePrincipal"
+                 name="domainePrincipalEmp"
+                 required
+                 placeholder="Ex: Informatique, Commerce, Bâtiment, Santé..."
+                 class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-calendar-check me-1"></i>Années d'expérience <span class="text-danger">*</span>
+          </label>
+          <input type="number"
+                 [(ngModel)]="employe.anneesExperience"
+                 name="anneesExperienceEmp"
+                 required
+                 min="0"
+                 placeholder="0 si débutant"
+                 class="form-control" />
+          <small class="text-muted">Indiquez 0 si vous êtes débutant</small>
+        </div>
+      </div>
+
+      <div class="form-navigation">
+        <button type="button"
+                class="btn btn-outline-secondary"
+                *ngIf="currentStep > 1"
+                (click)="previousStep()">
+          <i class="bi bi-arrow-left me-1"></i>Précédent
+        </button>
+        <button type="submit"
+                class="btn btn-primary btn-next"
+                [class.btn-submit]="currentStep === 2"
+                [disabled]="loading">
+          <span *ngIf="currentStep < 2">
+            Suivant <i class="bi bi-arrow-right ms-1"></i>
+          </span>
+          <span *ngIf="currentStep === 2">
+            {{ loading ? 'Création...' : 'Créer le compte' }}
+          </span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Formulaire Employeur -->
+    <form *ngIf="!isEmploye" (ngSubmit)="currentStep === 2 ? submitEmployeur() : nextStep()" class="register-form">
+      <div *ngIf="currentStep === 1" class="step-content">
+        <h3 class="step-title">
+          <i class="bi bi-person-circle me-2"></i>Informations personnelles
+        </h3>
+        <div class="row">
+          <div class="col">
+            <input type="text"
+                   [(ngModel)]="employeur.nom"
+                   name="nomEmpteur"
+                   required
+                   placeholder="Nom"
+                   class="form-control" />
+          </div>
+          <div class="col">
+            <input type="text"
+                   [(ngModel)]="employeur.prenom"
+                   name="prenomEmpteur"
+                   required
+                   placeholder="Prénom"
+                   class="form-control" />
+          </div>
+        </div>
+        <input type="email"
+               [(ngModel)]="employeur.email"
+               name="emailEmpteur"
+               required
+               placeholder="Email"
+               class="form-control" />
+        <input type="text"
+               [(ngModel)]="employeur.telephone"
+               name="telephoneEmpteur"
+               required
+               placeholder="Téléphone"
+               class="form-control" />
+        <input type="password"
+               [(ngModel)]="employeur.password"
+               name="passwordEmpteur"
+               required
+               placeholder="Mot de passe"
+               class="form-control" />
+      </div>
+
+      <div *ngIf="currentStep === 2" class="step-content">
+        <h3 class="step-title">
+          <i class="bi bi-briefcase me-2"></i>Informations professionnelles
+        </h3>
+        <p class="text-muted mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Ces informations sont nécessaires pour créer votre compte. Vous pourrez compléter votre profil plus tard.
+        </p>
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-building me-1"></i>Type d'employeur <span class="text-danger">*</span>
+          </label>
+          <select [(ngModel)]="employeur.typeEmployeur"
+                  name="typeEmployeurEmpteur"
+                  required
+                  class="form-control">
+            <option value="">-- Sélectionnez un type --</option>
+            <option value="ENTREPRISE">Entreprise</option>
+            <option value="PARTICULIER">Particulier</option>
+          </select>
+        </div>
+        <div *ngIf="employeur.typeEmployeur === 'ENTREPRISE'" class="form-group">
+          <label class="form-label">
+            <i class="bi bi-building me-1"></i>Nom de l'entreprise <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 [(ngModel)]="employeur.nomEntreprise"
+                 name="nomEntrepriseEmpteur"
+                 required
+                 placeholder="Nom de l'entreprise"
+                 class="form-control" />
+        </div>
+      </div>
+
+      <div class="form-navigation">
+        <button type="button"
+                class="btn btn-outline-secondary"
+                *ngIf="currentStep > 1"
+                (click)="previousStep()">
+          <i class="bi bi-arrow-left me-1"></i>Précédent
+        </button>
+        <button type="submit"
+                class="btn btn-primary btn-next"
+                [class.btn-submit]="currentStep === 2"
+                [disabled]="loading">
+          <span *ngIf="currentStep < 2">
+            Suivant <i class="bi bi-arrow-right ms-1"></i>
+          </span>
+          <span *ngIf="currentStep === 2">
+            {{ loading ? 'Création...' : 'Créer le compte' }}
+          </span>
+        </button>
+      </div>
+    </form>
+
+    <div class="register-footer text-center">
+      <a routerLink="/connexion" class="auth-link">J'ai déjà un compte ? Se connecter</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="sidebar-modern">
+  <!-- Profil Section -->
+  <div class="profile-card">
+    <div class="profile-card-header"></div>
+    <div class="profile-card-body">
+      <img [src]="photoProfil || 'assets/images/LUM3.jpg'" class="profile-avatar" alt="Profile" style="object-fit: cover;">
+      <h6 class="fw-bold mb-2">{{ displayName }}</h6>
+      <p class="text-muted small mb-2">Étudiant à Ipnet institute of technology</p>
+      <p class="text-muted small mb-3">Togo</p>
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+        <i class="bi bi-building text-muted"></i>
+        <small class="text-muted">Ipnet institute of technology</small>
+      </div>
+      <button class="btn btn-outline-primary btn-sm w-100" [routerLink]="getProfilRoute()">
+        <i class="bi bi-plus me-2"></i>Modifier le profil
+      </button>
+    </div>
+  </div>
+
+  <!-- Relations Section -->
+  <div class="content-card" *ngIf="userClaims?.role === 'EMPLOYE'">
+    <div class="content-card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="mb-0 fw-bold">Postulations</h6>
+        <span class="badge bg-primary">2</span>
+      </div>
+      <p class="text-muted small mb-3">Consultez vos postulations</p>
+      <button class="btn btn-outline-primary btn-sm w-100" routerLink="mes-postulations">
+        <i class="bi bi-border-left "></i>Voir mes postulations
+      </button>
+    </div>
+  </div>
+
+  <!-- Premium Section -->
+  <div class="content-card">
+    <div class="content-card-body text-center">
+      <h6 class="fw-bold mb-2">Développez votre carrière avec Premium</h6>
+      <p class="text-muted small mb-3">Accédez à des fonctionnalités avancées</p>
+      <button class="btn btn-warning btn-sm w-100">
+        <i class="bi bi-envelope me-2"></i>Essayez pendant 1 mois pour 0 CFA
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Section -->
+  <div class="content-card">
+    <div class="content-card-body p-0">
+      <ul class="modern-list">
+        <li class="modern-list-item">
+          <i class="bi bi-bookmark-fill text-primary"></i>
+          <span>Éléments enregistrés</span>
+        </li>
+        <li class="modern-list-item">
+          <i class="bi bi-people-fill text-info"></i>
+          <span>Groupes</span>
+        </li>
+        <li class="modern-list-item">
+          <i class="bi bi-newspaper text-warning"></i>
+          <span>Newsletters</span>
+        </li>
+        <li class="modern-list-item">
+          <i class="bi bi-calendar-event-fill text-success"></i>
+          <span>Événements</span>
+        </li>
+        <li class="modern-list-item">
+          <i class="bi bi-gear text-muted"></i>
+          <span>Paramètres</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Suggestions Section -->
+  <div class="content-card">
+    <div class="content-card-header">
+      <h6 class="mb-0 fw-bold">Suggestions pour vous</h6>
+    </div>
+    <div class="content-card-body">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Profile" style="width: 40px; height: 40px;">
+        <div class="flex-grow-1">
+          <h6 class="mb-1 small">Marie Kouassi</h6>
+          <p class="text-muted small mb-0">Développeuse Frontend</p>
+        </div>
+        <button class="btn btn-outline-primary btn-sm">+</button>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Profile" style="width: 40px; height: 40px;">
+        <div class="flex-grow-1">
+          <h6 class="mb-1 small">Jean-Paul Agbévi</h6>
+          <p class="text-muted small mb-0">Chef de Projet</p>
+        </div>
+        <button class="btn btn-outline-primary btn-sm">+</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-modern">
+  <!-- Suggestions Section -->
+  <div class="content-card">
+    <div class="content-card-header">
+      <h6 class="mb-0 fw-bold">Suggestions pour vous</h6>
+    </div>
+    <div class="content-card-body">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Profile" style="width: 40px; height: 40px;">
+        <div class="flex-grow-1">
+          <h6 class="mb-1 small">Marie Kouassi</h6>
+          <p class="text-muted small mb-0">Développeuse Frontend</p>
+        </div>
+        <button class="btn btn-outline-primary btn-sm">+</button>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Profile" style="width: 40px; height: 40px;">
+        <div class="flex-grow-1">
+          <h6 class="mb-1 small">Jean-Paul Agbévi</h6>
+          <p class="text-muted small mb-0">Chef de Projet</p>
+        </div>
+        <button class="btn btn-outline-primary btn-sm">+</button>
+      </div>
+    </div>
+  </div>
+</div>

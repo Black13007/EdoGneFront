@@ -1,0 +1,129 @@
+.container-modern {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.modern-grid {
+  display: grid;
+  gap: 1.7rem;
+}
+.modern-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.modern-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.section-spacing {
+  margin-bottom: 2.5rem;
+}
+.section-spacing-lg {
+  margin-bottom: 4rem;
+}
+@media (max-width: 992px) {
+  .modern-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modern-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .modern-grid-4,
+  .modern-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .stat-card {
+    min-width: 0;
+    padding: 0.8rem !important;
+    margin-bottom: 0.7rem;
+    font-size: 0.93rem;
+  }
+  .section-spacing, .section-spacing-lg {
+    margin-bottom: 1.2rem;
+  }
+  .content-card {
+    margin-bottom: 1.2rem;
+  }
+}
+.content-card, .stat-card {
+  box-shadow: 0 2px 8px rgba(44, 66, 123, 0.07);
+  background: #fff;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: box-shadow 0.25s;
+}
+.content-card {
+  margin-bottom: 2rem;
+}
+@media (max-width: 450px){
+  .container-modern { padding-left: 0; padding-right: 0; }
+}
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.modern-grid {
+  display: grid;
+  gap: 1.7rem;
+}
+.modern-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.modern-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.section-spacing {
+  margin-bottom: 2.5rem;
+}
+.section-spacing-lg {
+  margin-bottom: 4rem;
+}
+@media (max-width: 992px) {
+  .modern-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modern-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .modern-grid-4,
+  .modern-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .stat-card {
+    min-width: 0;
+    padding: 0.8rem !important;
+    margin-bottom: 0.7rem;
+    font-size: 0.93rem;
+  }
+  .section-spacing, .section-spacing-lg {
+    margin-bottom: 1.2rem;
+  }
+  .content-card {
+    margin-bottom: 1.2rem;
+  }
+}
+.content-card, .stat-card {
+  box-shadow: 0 2px 8px rgba(44, 66, 123, 0.07);
+  background: #fff;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: box-shadow 0.25s;
+}
+.content-card {
+  margin-bottom: 2rem;
+}
+@media (max-width: 450px){
+  .container-modern { padding-left: 0; padding-right: 0; }
+}
+
+
+

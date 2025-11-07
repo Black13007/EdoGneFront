@@ -1,0 +1,365 @@
+<div class="page-container">
+  <!-- En-tête avec recherche -->
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <h1 class="display-4 mb-3">
+            <i class="bi bi-briefcase-fill me-3"></i>
+            Offres d'Emploi
+          </h1>
+          <p class="lead mb-0">Découvrez les meilleures opportunités d'emploi dans votre région</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-modern">
+    <!-- Barre de recherche moderne -->
+    <div class="content-card section-spacing">
+      <div class="content-card-body">
+        <div class="search-grid">
+          <div class="search-item">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Mots-clés, compétences..."
+              [(ngModel)]="searchKeyword"
+              (input)="onSearchChange()"
+            >
+          </div>
+          <div class="search-item">
+            <select class="form-select" [(ngModel)]="searchDomaine" (change)="onSearchChange()">
+              <option value="">Tous les secteurs</option>
+              <option *ngFor="let domaine of getDomainesUniques()" [value]="domaine">{{ domaine }}</option>
+            </select>
+          </div>
+          <div class="search-item">
+            <select class="form-select" [(ngModel)]="searchVille" (change)="onSearchChange()">
+              <option value="">Toutes les villes</option>
+              <option *ngFor="let ville of getVillesUniques()" [value]="ville">{{ ville }}</option>
+            </select>
+          </div>
+          <div class="search-item">
+            <select class="form-select" [(ngModel)]="searchTypeContrat" (change)="onSearchChange()">
+              <option value="">Tous les types</option>
+              <option value="CDI">CDI</option>
+              <option value="CDD">CDD</option>
+              <option value="STAGE">Stage</option>
+              <option value="FREELANCE">Freelance</option>
+              <option value="TEMPS_PARTIEL">Temps partiel</option>
+            </select>
+          </div>
+          <div class="search-item">
+            <button class="btn btn-primary w-100" (click)="onSearchChange()">
+              <i class="bi bi-search me-2"></i>Rechercher
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm mt-2" (click)="reinitialiserFiltres()">
+          <i class="bi bi-x-circle me-1"></i>Réinitialiser
+        </button>
+      </div>
+    </div>
+
+    <!-- Filtres et statistiques -->
+    <div class="content-card section-spacing" *ngIf="stats.total > 0">
+      <div class="content-card-body">
+        <div class="stats-container">
+          <div class="stats-badges">
+            <span class="badge bg-primary">Total ({{ stats.total }})</span>
+            <span class="badge bg-info" *ngIf="stats.tempsPlein > 0">CDI/CDD ({{ stats.tempsPlein }})</span>
+            <span class="badge bg-success" *ngIf="stats.stage > 0">Stage ({{ stats.stage }})</span>
+            <span class="badge bg-warning" *ngIf="stats.freelance > 0">Freelance ({{ stats.freelance }})</span>
+            <span class="badge bg-secondary" *ngIf="stats.tempsPartiel > 0">Temps partiel ({{ stats.tempsPartiel }})</span>
+          </div>
+          <small class="text-muted">{{ offresFiltrees.length }} offre(s) trouvée(s)</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message de chargement -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p class="mt-3 text-muted">Chargement des offres d'emploi...</p>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage && !loading" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
+    </div>
+
+    <!-- Message aucune offre -->
+    <div *ngIf="!loading && !errorMessage && offresFiltrees.length === 0" class="text-center py-5">
+      <i class="bi bi-inbox fs-1 text-muted"></i>
+      <p class="mt-3 text-muted">Aucune offre d'emploi trouvée</p>
+      <button class="btn btn-outline-primary" (click)="reinitialiserFiltres()">Voir toutes les offres</button>
+    </div>
+
+    <!-- Liste des offres d'emploi -->
+    <div class="offers-list" *ngIf="!loading && !errorMessage && offresFiltrees.length > 0">
+      <div class="offer-card" *ngFor="let offre of offresFiltrees">
+        <div class="offer-header">
+          <div class="offer-logo">
+            <i class="bi bi-building fs-2 text-primary"></i>
+          </div>
+          <div class="offer-main-info">
+            <h5 class="offer-title">{{ offre.titre }}</h5>
+            <p class="offer-company">
+              <span *ngIf="offre.employeur">{{ offre.employeur.nomEntreprise || (offre.employeur.nom + ' ' + offre.employeur.prenom) }}</span>
+              <span *ngIf="!offre.employeur">Employeur</span>
+            </p>
+            <div class="offer-meta">
+              <span class="meta-item">
+                <i class="bi bi-geo-alt me-1"></i>{{ offre.ville }}
+              </span>
+              <span class="meta-item">
+                <i class="bi bi-briefcase me-1"></i>{{ getTypeContratLabel(offre.typeContrat) }}
+              </span>
+              <span class="meta-item" *ngIf="offre.salaire">
+                <i class="bi bi-cash-coin me-1"></i>{{ formaterSalaire(offre.salaire) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="offer-body">
+          <div class="offer-tags">
+            <span class="tag tag-domain">{{ offre.domaine }}</span>
+            <span class="tag tag-contract">{{ getTypeContratLabel(offre.typeContrat) }}</span>
+          </div>
+          
+          <p class="offer-description">{{ offre.description }}</p>
+
+          <div class="offer-footer">
+            <small class="text-muted">
+              <i class="bi bi-clock me-1"></i>{{ getDaysAgo(offre.datePublication) }}
+              <span *ngIf="offre.nombrePostulations !== undefined" class="ms-3">
+                <i class="bi bi-people me-1"></i>{{ offre.nombrePostulations }} candidature(s)
+              </span>
+            </small>
+            <div class="offer-actions">
+              <button class="btn btn-outline-primary btn-sm" (click)="openModal(offre)">
+                <i class="bi bi-eye me-1"></i>Voir détails
+              </button>
+              <button class="btn btn-primary btn-sm" (click)="openPostulationModal(offre)">
+                <i class="bi bi-send me-1"></i>Postuler
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal des détails de l'offre -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()" *ngIf="selectedOffre">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <i class="bi bi-briefcase-fill me-2"></i>Détails de l'offre
+        </h4>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-offer-header">
+          <div class="modal-offer-logo">
+            <i class="bi bi-building fs-1 text-primary"></i>
+          </div>
+          <div class="modal-offer-info">
+            <h3 class="modal-offer-title">{{ selectedOffre.titre }}</h3>
+            <p class="modal-offer-company">
+              <span *ngIf="selectedOffre.employeur">
+                {{ selectedOffre.employeur.nomEntreprise || (selectedOffre.employeur.nom + ' ' + selectedOffre.employeur.prenom) }}
+              </span>
+              <span *ngIf="!selectedOffre.employeur">Employeur</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-badges">
+            <span class="badge badge-primary">{{ selectedOffre.domaine }}</span>
+            <span class="badge badge-info">{{ getTypeContratLabel(selectedOffre.typeContrat) }}</span>
+            <span class="badge badge-success" *ngIf="selectedOffre.salaire">{{ formaterSalaire(selectedOffre.salaire) }}</span>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h5 class="section-title">
+            <i class="bi bi-info-circle me-2"></i>Informations générales
+          </h5>
+          <div class="info-grid">
+            <div class="info-item">
+              <i class="bi bi-geo-alt-fill text-primary"></i>
+              <div>
+                <strong>Lieu</strong>
+                <p>{{ selectedOffre.ville }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-briefcase-fill text-info"></i>
+              <div>
+                <strong>Type de contrat</strong>
+                <p>{{ getTypeContratLabel(selectedOffre.typeContrat) }}</p>
+              </div>
+            </div>
+            <div class="info-item" *ngIf="selectedOffre.salaire">
+              <i class="bi bi-cash-coin text-success"></i>
+              <div>
+                <strong>Salaire</strong>
+                <p>{{ formaterSalaire(selectedOffre.salaire) }}</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-calendar-event text-warning"></i>
+              <div>
+                <strong>Date de publication</strong>
+                <p>{{ formatDate(selectedOffre.datePublication) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h5 class="section-title">
+            <i class="bi bi-file-text me-2"></i>Description du poste
+          </h5>
+          <p class="section-content">{{ selectedOffre.description }}</p>
+        </div>
+
+        <div class="modal-section" *ngIf="selectedOffre.exigences">
+          <h5 class="section-title">
+            <i class="bi bi-check-circle-fill me-2"></i>Exigences et compétences
+          </h5>
+          <p class="section-content">{{ selectedOffre.exigences }}</p>
+        </div>
+
+        <div class="modal-section" *ngIf="selectedOffre.nombrePostulations !== undefined">
+          <div class="stats-info">
+            <i class="bi bi-people-fill text-primary me-2"></i>
+            <span><strong>{{ selectedOffre.nombrePostulations }}</strong> candidature(s) reçue(s)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">
+          <i class="bi bi-x me-1"></i>Fermer
+        </button>
+        <button type="button" class="btn btn-primary" (click)="openPostulationModal(selectedOffre)">
+          <i class="bi bi-send me-1"></i>Postuler maintenant
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de postulation -->
+  <div class="modal-overlay" *ngIf="showPostulationModal" (click)="closePostulationModal()">
+    <div class="modal-container modal-postulation" (click)="$event.stopPropagation()" *ngIf="selectedOffre">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <i class="bi bi-send-fill me-2"></i>Postuler à cette offre
+        </h4>
+        <button type="button" class="btn-close" (click)="closePostulationModal()" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="postulation-offer-info">
+          <h5 class="mb-2">{{ selectedOffre.titre }}</h5>
+          <p class="text-muted mb-3">
+            <span *ngIf="selectedOffre.employeur">
+              {{ selectedOffre.employeur.nomEntreprise || (selectedOffre.employeur.nom + ' ' + selectedOffre.employeur.prenom) }}
+            </span>
+            <span *ngIf="!selectedOffre.employeur">Employeur</span>
+            · {{ selectedOffre.ville }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-chat-left-text me-1"></i>Message de candidature (optionnel)
+          </label>
+          <textarea 
+            class="form-control" 
+            rows="5"
+            [(ngModel)]="postulationMessage"
+            placeholder="Ajoutez un message personnalisé pour accompagner votre candidature..."
+          ></textarea>
+          <small class="text-muted">Ce message sera envoyé avec votre candidature</small>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closePostulationModal()" [disabled]="postulationLoading">
+          <i class="bi bi-x me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="postuler()" [disabled]="postulationLoading">
+          <span *ngIf="postulationLoading" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!postulationLoading" class="bi bi-send me-1"></i>
+          {{ postulationLoading ? 'Envoi en cours...' : 'Envoyer la candidature' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-container">
+  <!-- Modal de postulation -->
+  <div class="modal-overlay" *ngIf="showPostulationModal" (click)="closePostulationModal()">
+    <div class="modal-container modal-postulation" (click)="$event.stopPropagation()" *ngIf="selectedOffre">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <i class="bi bi-send-fill me-2"></i>Postuler à cette offre
+        </h4>
+        <button type="button" class="btn-close" (click)="closePostulationModal()" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="postulation-offer-info">
+          <h5 class="mb-2">{{ selectedOffre.titre }}</h5>
+          <p class="text-muted mb-3">
+            <span *ngIf="selectedOffre.employeur">
+              {{ selectedOffre.employeur.nomEntreprise || (selectedOffre.employeur.nom + ' ' + selectedOffre.employeur.prenom) }}
+            </span>
+            <span *ngIf="!selectedOffre.employeur">Employeur</span>
+            · {{ selectedOffre.ville }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="bi bi-chat-left-text me-1"></i>Message de candidature (optionnel)
+          </label>
+          <textarea 
+            class="form-control" 
+            rows="5"
+            [(ngModel)]="postulationMessage"
+            placeholder="Ajoutez un message personnalisé pour accompagner votre candidature..."
+          ></textarea>
+          <small class="text-muted">Ce message sera envoyé avec votre candidature</small>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closePostulationModal()" [disabled]="postulationLoading">
+          <i class="bi bi-x me-1"></i>Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="postuler()" [disabled]="postulationLoading">
+          <span *ngIf="postulationLoading" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!postulationLoading" class="bi bi-send me-1"></i>
+          {{ postulationLoading ? 'Envoi en cours...' : 'Envoyer la candidature' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

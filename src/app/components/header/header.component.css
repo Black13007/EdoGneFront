@@ -1,0 +1,264 @@
+/* Header moderne avec navigation horizontale */
+.modern-header {
+  background: #2d3748;
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 8px rgba(45, 55, 72, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  height: 65px;
+}
+
+/* Assurer la stabilité du layout */
+.modern-header .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+  min-width: 0; /* pour permettre le shrink du centre */
+}
+
+/* Logo et branding */
+.modern-header .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+}
+
+.modern-header .navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+/* Barre de recherche élégante */
+.search-container {
+  max-width: 280px;
+  width: 280px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex: 1 1 280px; /* permet le shrink entre brand et actions */
+  min-width: 160px;
+}
+
+.search-container:focus-within {
+  max-width: 350px;
+  width: 350px;
+  transform: scale(1.01);
+}
+
+.modern-header .form-control {
+  border: none;
+  border-radius: 25px 0 0 25px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modern-header .form-control:focus {
+  box-shadow: 0 4px 20px rgba(74, 85, 104, 0.15);
+  border-color: transparent;
+  background-color: rgba(255, 255, 255, 1);
+  outline: none;
+}
+
+.modern-header .form-control::placeholder {
+  color: rgba(107, 114, 128, 0.7);
+  transition: all 0.3s ease;
+}
+
+.modern-header .form-control:focus::placeholder {
+  color: rgba(107, 114, 128, 0.4);
+  transform: translateX(5px);
+}
+
+.modern-header .btn-light {
+  border-radius: 0 25px 25px 0;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--primary-color);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.6rem 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modern-header .btn-light:hover {
+  background-color: var(--light-accent);
+  color: var(--primary-dark);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(74, 85, 104, 0.15);
+}
+
+.search-container:focus-within .btn-light {
+  background-color: var(--light-accent);
+  box-shadow: 0 4px 20px rgba(74, 85, 104, 0.15);
+}
+
+/* Navigation horizontale */
+.modern-header .navbar-nav {
+  gap: 0.5rem;
+}
+
+.modern-header .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 0.2rem 0.7rem;
+  min-width: 75px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-header .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.modern-header .nav-link:hover::before {
+  left: 100%;
+}
+
+.modern-header .nav-link:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modern-header .nav-link.active {
+  color: white;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.3) 100%);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modern-header .nav-link i {
+  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.modern-header .nav-link:hover i {
+  transform: scale(1.1);
+}
+
+.modern-header .nav-link small {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Bouton Premium */
+.premium-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  font-size: 0.85rem;
+}
+
+.premium-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+}
+
+/* Profil utilisateur */
+.profile-btn {
+  border: none;
+  padding: 0.4rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.profile-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.profile-btn img {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.profile-btn:hover img {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Menu dropdown */
+.modern-header .dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.modern-header .dropdown-item {
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.modern-header .dropdown-item:hover {
+  background: var(--light-accent);
+  color: var(--primary-color);
+  transform: translateX(8px);
+}
+
+.modern-header .dropdown-item i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Toggle mobile: masqué pour éviter le désordre si non utilisé */
+.modern-header .navbar-toggler {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .search-container { max-width: 260px; }
+  .search-container:focus-within { max-width: 320px; width: 320px; }
+}
+
+@media (max-width: 992px) {
+  .modern-header .navbar-nav { display: none; }
+  .search-container { max-width: 220px; min-width: 150px; flex: 1 1 180px; }
+  .search-container:focus-within { max-width: 260px; width: 260px; }
+  .modern-header .d-flex.align-items-center.gap-3 { flex: 0 0 auto; gap: 0.5rem; }
+  .premium-btn { padding: 0.35rem 0.8rem; font-size: 0.8rem; }
+}
+
+@media (max-width: 768px) {
+  /* Masquer la recherche pour éviter le chevauchement */
+  .search-container { display: none; }
+  .modern-header .navbar-brand { font-size: 1.25rem; }
+  .premium-btn { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+}
+
+@media (max-width: 576px) {
+  .modern-header { padding: 0.4rem 0; }
+  .modern-header .navbar-brand { font-size: 1.1rem; }
+}

@@ -1,0 +1,734 @@
+.register-container {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f7fa;
+}
+.register-card {
+  width: 100%;
+  max-width: 540px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44, 66, 123, 0.07);
+  padding: 2rem 2.25rem;
+  margin: 2rem 0;
+}
+.register-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.register-title {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #2d3748;
+}
+.register-switch {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.btn-switch {
+  border: none;
+  background-color: #f0f4f8;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  color: #4263eb;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-switch.active,
+.btn-switch:hover {
+  background-color: #4263eb;
+  color: #fff;
+}
+.register-form .form-control {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.2rem;
+  font-size: 1rem;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  background: #f9fbfd;
+  transition: border 0.2s;
+}
+.register-form .form-control:focus {
+  border: 1.2px solid #4263eb;
+  outline: none;
+}
+.btn-register {
+  width: 100%;
+  padding: 0.84rem 0;
+  font-size: 1.14rem;
+  border-radius: 7px;
+  font-weight: 600;
+  background-color: #4263eb;
+  color: white;
+  box-shadow: 0 4px 12px rgba(44,66,123,0.06);
+  border: none;
+  margin-top: 0.65rem;
+  margin-bottom: 0.7rem;
+  transition: background 0.2s;
+}
+.btn-register:disabled {
+  background: #a7b3ca;
+  color: #f1f3f8;
+  cursor: not-allowed;
+}
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.col {
+  flex: 1;
+}
+textarea.form-control {
+  min-height: 60px;
+  resize: vertical;
+}
+.register-footer {
+  margin-top: 1rem;
+}
+.auth-link {
+  color: #4263eb;
+  font-weight: 500;
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .register-card {
+    padding: 1rem 0.5rem;
+    max-width: 99vw;
+  }
+  .row {
+    flex-direction: column;
+    gap:0;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+.form-check-label {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Styles pour l'autocomplétion Geoapify */
+.autocomplete-container {
+  position: relative;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.address-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.suggestion-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f7fafc;
+}
+
+.suggestion-item:active {
+  background-color: #e2e8f0;
+}
+
+.suggestion-item i {
+  color: #4263eb;
+  font-size: 1.1rem;
+  margin-top: 0.15rem;
+}
+
+.suggestion-content {
+  flex: 1;
+}
+
+.suggestion-main {
+  font-weight: 500;
+  color: #2d3748;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.suggestion-details {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.suggestion-loading,
+.suggestion-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.suggestion-loading i.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles pour le formulaire multi-étapes */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.step-item.active .step-number {
+  background-color: #4263eb;
+  color: white;
+  border-color: #4263eb;
+  box-shadow: 0 0 0 4px rgba(66, 99, 235, 0.1);
+}
+
+.step-item.completed .step-number {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.step-item.completed .step-number::before {
+  content: '✓';
+  font-size: 1.2rem;
+}
+
+.step-label {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  text-align: center;
+}
+
+.step-item.active .step-label {
+  color: #4263eb;
+  font-weight: 600;
+}
+
+.step-item.completed .step-label {
+  color: #10b981;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background-color: #e2e8f0;
+  margin: 0 0.5rem;
+  transition: all 0.3s ease;
+  max-width: 80px;
+}
+
+.step-line.completed {
+  background-color: #10b981;
+}
+
+.step-content {
+  min-height: 300px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-next {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 7px;
+  background-color: #4263eb;
+  color: white;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-next:hover:not(:disabled) {
+  background-color: #3451d9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.3);
+}
+
+.btn-next:disabled {
+  background: #a7b3ca;
+  cursor: not-allowed;
+}
+
+.btn-submit {
+  background-color: #10b981;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.btn-outline-secondary {
+  padding: 0.75rem 1.5rem;
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  color: #475569;
+  border-radius: 7px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #334155;
+}
+
+@media (max-width: 768px) {
+  .step-indicator {
+    padding: 0.5rem;
+  }
+  
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.85rem;
+  }
+  
+  .step-label {
+    font-size: 0.65rem;
+  }
+  
+  .step-line {
+    max-width: 40px;
+  }
+  
+  .form-navigation {
+    flex-direction: column;
+  }
+  
+  .btn-next,
+  .btn-outline-secondary {
+    width: 100%;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+.form-check-label {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Styles pour l'autocomplétion Geoapify */
+.autocomplete-container {
+  position: relative;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.address-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.suggestion-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background-color: #f7fafc;
+}
+
+.suggestion-item:active {
+  background-color: #e2e8f0;
+}
+
+.suggestion-item i {
+  color: #4263eb;
+  font-size: 1.1rem;
+  margin-top: 0.15rem;
+}
+
+.suggestion-content {
+  flex: 1;
+}
+
+.suggestion-main {
+  font-weight: 500;
+  color: #2d3748;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.suggestion-details {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.suggestion-loading,
+.suggestion-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.suggestion-loading i.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles pour le formulaire multi-étapes */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.step-item.active .step-number {
+  background-color: #4263eb;
+  color: white;
+  border-color: #4263eb;
+  box-shadow: 0 0 0 4px rgba(66, 99, 235, 0.1);
+}
+
+.step-item.completed .step-number {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.step-item.completed .step-number::before {
+  content: '✓';
+  font-size: 1.2rem;
+}
+
+.step-label {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  text-align: center;
+}
+
+.step-item.active .step-label {
+  color: #4263eb;
+  font-weight: 600;
+}
+
+.step-item.completed .step-label {
+  color: #10b981;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background-color: #e2e8f0;
+  margin: 0 0.5rem;
+  transition: all 0.3s ease;
+  max-width: 80px;
+}
+
+.step-line.completed {
+  background-color: #10b981;
+}
+
+.step-content {
+  min-height: 300px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-next {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 7px;
+  background-color: #4263eb;
+  color: white;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-next:hover:not(:disabled) {
+  background-color: #3451d9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 99, 235, 0.3);
+}
+
+.btn-next:disabled {
+  background: #a7b3ca;
+  cursor: not-allowed;
+}
+
+.btn-submit {
+  background-color: #10b981;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.btn-outline-secondary {
+  padding: 0.75rem 1.5rem;
+  border: 1.5px solid #cbd5e1;
+  background: white;
+  color: #475569;
+  border-radius: 7px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #334155;
+}
+
+@media (max-width: 768px) {
+  .step-indicator {
+    padding: 0.5rem;
+  }
+  
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.85rem;
+  }
+  
+  .step-label {
+    font-size: 0.65rem;
+  }
+  
+  .step-line {
+    max-width: 40px;
+  }
+  
+  .form-navigation {
+    flex-direction: column;
+  }
+  
+  .btn-next,
+  .btn-outline-secondary {
+    width: 100%;
+  }
+}

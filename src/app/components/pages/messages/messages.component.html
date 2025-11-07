@@ -1,0 +1,265 @@
+<div class="page-container">
+  <!-- En-tête -->
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 class="display-4 mb-3">
+            <i class="bi bi-chat-dots-fill me-3"></i>
+            Messages
+          </h1>
+          <p class="lead mb-0">Communiquez avec votre réseau professionnel</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <button class="btn btn-light me-2">
+            <i class="bi bi-plus me-2"></i>Nouveau message
+          </button>
+          <button class="btn btn-outline-light">
+            <i class="bi bi-gear me-2"></i>Paramètres
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-0">
+    <!-- Sidebar avec liste des conversations -->
+    <div class="col-md-4">
+      <div class="bg-light" style="height: calc(100vh - 120px);">
+        <!-- Barre de recherche -->
+        <div class="p-3 border-bottom">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Rechercher une conversation...">
+          </div>
+        </div>
+
+        <!-- Filtres -->
+        <div class="p-3 border-bottom">
+          <div class="btn-group w-100" role="group">
+            <button class="btn btn-outline-primary btn-sm active">Tous (23)</button>
+            <button class="btn btn-outline-primary btn-sm">Non lus (5)</button>
+            <button class="btn btn-outline-primary btn-sm">Favoris (8)</button>
+          </div>
+        </div>
+
+        <!-- Liste des conversations -->
+        <div style="height: calc(100vh - 200px); overflow-y: auto;">
+          <!-- Conversation 1 -->
+          <div class="p-3 border-bottom conversation-item" style="cursor: pointer;">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 0; right: 0;">
+                  3
+                </span>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-1">Marie Kouassi</h6>
+                  <small class="text-muted">14:30</small>
+                </div>
+                <p class="mb-1 text-muted small">Merci pour votre aide sur le projet Angular...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">Développeuse Frontend</small>
+                  <i class="bi bi-pin-angle-fill text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversation 2 -->
+          <div class="p-3 border-bottom conversation-item" style="cursor: pointer;">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-1">Tech Solutions Togo</h6>
+                  <small class="text-muted">12:15</small>
+                </div>
+                <p class="mb-1 text-muted small">Nous avons bien reçu votre candidature...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">Recruteur</small>
+                  <i class="bi bi-star-fill text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversation 3 -->
+          <div class="p-3 border-bottom conversation-item" style="cursor: pointer;">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 0; right: 0;">
+                  1
+                </span>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-1">Jean-Paul Agbévi</h6>
+                  <small class="text-muted">10:45</small>
+                </div>
+                <p class="mb-1 text-muted small">Salut ! Tu seras au meetup de demain ?</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">Chef de Projet</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversation 4 -->
+          <div class="p-3 border-bottom conversation-item" style="cursor: pointer;">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-1">Formation IT Center</h6>
+                  <small class="text-muted">Hier</small>
+                </div>
+                <p class="mb-1 text-muted small">Nouvelle session de formation Angular disponible...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">Centre de formation</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversation 5 -->
+          <div class="p-3 border-bottom conversation-item" style="cursor: pointer;">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h6 class="mb-1">Fatou Diallo</h6>
+                  <small class="text-muted">Lun</small>
+                </div>
+                <p class="mb-1 text-muted small">Parfait, on se voit mardi à 14h</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">UX Designer</small>
+                  <i class="bi bi-star-fill text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Zone de conversation -->
+    <div class="col-md-8">
+      <div class="d-flex flex-column" style="height: calc(100vh - 120px);">
+        <!-- En-tête de conversation -->
+        <div class="p-3 border-bottom bg-white">
+          <div class="d-flex align-items-center">
+            <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="Avatar">
+            <div class="flex-grow-1">
+              <h6 class="mb-0">Marie Kouassi</h6>
+              <small class="text-muted">En ligne</small>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-telephone"></i>
+              </button>
+              <button class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-camera-video"></i>
+              </button>
+              <button class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zone des messages -->
+        <div class="flex-grow-1 p-3" style="overflow-y: auto; background-color: #f8f9fa;">
+          <!-- Message reçu -->
+          <div class="d-flex mb-3">
+            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Avatar">
+            <div class="bg-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Salut ! Comment ça va ? J'ai une question sur le projet Angular qu'on travaille ensemble.</p>
+              <small class="text-muted">14:25</small>
+            </div>
+          </div>
+
+          <!-- Message envoyé -->
+          <div class="d-flex justify-content-end mb-3">
+            <div class="bg-info text-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Salut Marie ! Ça va bien merci. Oui, je suis là pour t'aider. Quelle est ta question ?</p>
+              <small class="text-white-50">14:26</small>
+            </div>
+          </div>
+
+          <!-- Message reçu -->
+          <div class="d-flex mb-3">
+            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Avatar">
+            <div class="bg-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">J'ai un problème avec le routing dans Angular. Quand je navigue vers une page, les données ne se chargent pas correctement.</p>
+              <small class="text-muted">14:28</small>
+            </div>
+          </div>
+
+          <!-- Message envoyé -->
+          <div class="d-flex justify-content-end mb-3">
+            <div class="bg-info text-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Ah je vois ! C'est probablement un problème avec les resolvers ou la gestion des observables. Tu utilises des services pour récupérer tes données ?</p>
+              <small class="text-white-50">14:30</small>
+            </div>
+          </div>
+
+          <!-- Message reçu -->
+          <div class="d-flex mb-3">
+            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Avatar">
+            <div class="bg-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Oui, j'ai un service qui fait des appels HTTP. Le problème c'est que parfois les données arrivent après que le composant soit déjà rendu.</p>
+              <small class="text-muted">14:32</small>
+            </div>
+          </div>
+
+          <!-- Message envoyé -->
+          <div class="d-flex justify-content-end mb-3">
+            <div class="bg-info text-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Parfait ! Tu peux utiliser le pipe async dans ton template ou gérer ça avec *ngIf. Je peux t'envoyer un exemple de code si tu veux ?</p>
+              <small class="text-white-50">14:33</small>
+            </div>
+          </div>
+
+          <!-- Message reçu -->
+          <div class="d-flex mb-3">
+            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Avatar">
+            <div class="bg-white rounded p-3 shadow-sm" style="max-width: 70%;">
+              <p class="mb-1">Oui s'il te plaît ! Ça m'aiderait beaucoup. Merci pour ton aide 😊</p>
+              <small class="text-muted">14:35</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zone de saisie -->
+        <div class="p-3 border-top bg-white">
+          <div class="d-flex align-items-center">
+            <button class="btn btn-outline-secondary me-2">
+              <i class="bi bi-paperclip"></i>
+            </button>
+            <div class="flex-grow-1">
+              <input type="text" class="form-control" placeholder="Tapez votre message...">
+            </div>
+            <button class="btn btn-outline-secondary ms-2 me-2">
+              <i class="bi bi-emoji-smile"></i>
+            </button>
+            <button class="btn btn-info">
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

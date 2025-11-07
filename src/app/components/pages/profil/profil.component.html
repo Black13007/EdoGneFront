@@ -1,0 +1,513 @@
+<div class="profile-container">
+  <!-- Message de chargement -->
+  <div *ngIf="loading && !employe" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2 text-muted">Chargement du profil...</p>
+  </div>
+
+  <!-- Carte de profil -->
+  <div *ngIf="employe || !loading" class="profile-card">
+    <div class="profile-banner"></div>
+    <div class="profile-header">
+      <div class="position-relative">
+        <img 
+          [src]="photoPreview || employe?.photoProfil || 'assets/images/LUM3.jpg'" 
+          [alt]="displayName" 
+          class="profile-avatar-xl"
+        />
+        <button 
+          class="btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle"
+          style="width: 36px; height: 36px; padding: 0;"
+          (click)="editSection('photo')"
+          title="Changer la photo"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+        <input 
+          #photoInput
+          type="file"
+          accept="image/*"
+          style="display: none;"
+          (change)="onPhotoSelected($event)"
+        />
+        <!-- Modal pour éditer la photo -->
+        <div *ngIf="editingSection === 'photo'" class="modal fade show d-block" style="background-color: rgba(0,0,0,0.5);" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modifier la photo de profil</h5>
+                <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+              </div>
+              <div class="modal-body text-center">
+                <img 
+                  [src]="photoPreview || employe?.photoProfil || 'assets/images/LUM3.jpg'" 
+                  alt="Photo de profil" 
+                  class="rounded-circle mb-3"
+                  style="width: 150px; height: 150px; object-fit: cover;"
+                />
+                <input 
+                  type="file"
+                  accept="image/*"
+                  class="form-control mb-3"
+                  (change)="onPhotoSelected($event)"
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+                <button type="button" class="btn btn-primary" (click)="savePhoto()" [disabled]="!selectedPhoto || loading">
+                  {{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-summary">
+        <h2 class="profile-name">{{ displayName }}</h2>
+        <p class="profile-title">
+          {{ employe?.domainePrincipal || 'Domaine non spécifié' }} · 
+          {{ employe?.anneesExperience || 0 }} an(s) d'expérience
+        </p>
+        <p class="profile-meta">
+          <i class="bi bi-geo-alt me-1"></i>
+          {{ employe?.adresse || 'Adresse non renseignée' }}
+          <span *ngIf="employe?.latitude && employe?.longitude" class="text-muted">
+            · {{ employe?.latitude?.toFixed(4) }}, {{ employe?.longitude?.toFixed(4) }}
+          </span>
+        </p>
+        <div class="profile-actions">
+          <button 
+            *ngIf="!editing"
+            class="btn btn-primary"
+            (click)="toggleEdit()"
+          >
+            <i class="bi bi-pencil me-1"></i>Modifier le profil
+          </button>
+          <button 
+            *ngIf="editing"
+            class="btn btn-success"
+            (click)="saveProfile()"
+            [disabled]="loading"
+          >
+            <i class="bi bi-check me-1"></i>{{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+          </button>
+          <button 
+            *ngIf="editing"
+            class="btn btn-outline-secondary"
+            (click)="toggleEdit()"
+            [disabled]="loading"
+          >
+            <i class="bi bi-x me-1"></i>Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire d'édition -->
+    <div *ngIf="editing" class="profile-body">
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Complétez votre profil</strong> pour améliorer votre visibilité auprès des employeurs.
+      </div>
+
+      <!-- Informations personnelles -->
+      <section class="profile-section">
+        <h5 class="section-title">
+          <i class="bi bi-person-lines-fill me-2"></i>Informations personnelles
+        </h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nom <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.nom" 
+              class="form-control" 
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Prénom <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.prenom" 
+              class="form-control" 
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email <span class="text-danger">*</span></label>
+            <input 
+              type="email" 
+              [(ngModel)]="employeForm.email" 
+              class="form-control" 
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Téléphone <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.telephone" 
+              class="form-control" 
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Nouveau mot de passe</label>
+            <input 
+              type="password" 
+              [(ngModel)]="employeForm.password" 
+              class="form-control" 
+              placeholder="Laissez vide pour ne pas changer"
+            />
+            <small class="text-muted">Laissez vide si vous ne souhaitez pas changer votre mot de passe</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Informations professionnelles -->
+      <section class="profile-section">
+        <h5 class="section-title">
+          <i class="bi bi-briefcase me-2"></i>Informations professionnelles
+        </h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Domaine principal <span class="text-danger">*</span></label>
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.domainePrincipal" 
+              class="form-control" 
+              placeholder="Ex: Informatique, Commerce, Bâtiment..."
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Années d'expérience <span class="text-danger">*</span></label>
+            <input 
+              type="number" 
+              [(ngModel)]="employeForm.anneesExperience" 
+              class="form-control" 
+              min="0"
+              required
+            />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Bio / Description professionnelle</label>
+            <textarea 
+              [(ngModel)]="employeForm.bio" 
+              class="form-control" 
+              rows="4"
+              placeholder="Parlez-nous de vous, vos compétences, votre parcours..."
+            ></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Documents / Certifications</label>
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.documentsCertifications" 
+              class="form-control" 
+              placeholder="Ex: Diplôme, Certifications, Permis..."
+            />
+            <small class="text-muted">Listez vos diplômes, certifications et documents professionnels</small>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="employeForm.disponibilite" 
+                class="form-check-input" 
+                id="disponibilite"
+              />
+              <label class="form-check-label" for="disponibilite">
+                <i class="bi bi-check-circle me-1"></i>Disponible immédiatement
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Localisation -->
+      <section class="profile-section">
+        <h5 class="section-title">
+          <i class="bi bi-geo-alt me-2"></i>Localisation
+        </h5>
+        <div class="form-group autocomplete-container">
+          <label class="form-label">Adresse complète</label>
+          <div class="input-wrapper">
+            <input 
+              #addressInput
+              type="text" 
+              [(ngModel)]="employeForm.adresse" 
+              class="form-control address-autocomplete"
+              autocomplete="off"
+              placeholder="Commencez à taper votre adresse (min 3 caractères)"
+              (input)="onAddressInput($event)"
+              (focus)="showSuggestions = true"
+              (blur)="hideSuggestions()"
+            />
+            <div *ngIf="showSuggestions || loadingSuggestions" class="suggestions-dropdown" (mousedown)="$event.preventDefault()">
+              <div *ngIf="loadingSuggestions" class="suggestion-loading">
+                <i class="bi bi-arrow-repeat spin me-2"></i>Recherche en cours...
+              </div>
+              <div *ngIf="!loadingSuggestions && suggestions.length === 0" class="suggestion-empty">
+                <i class="bi bi-info-circle me-2"></i>Aucune adresse trouvée
+              </div>
+              <div *ngIf="!loadingSuggestions && suggestions.length > 0">
+                <div 
+                  *ngFor="let suggestion of suggestions" 
+                  class="suggestion-item"
+                  (click)="selectAddress(suggestion)"
+                  (mousedown)="$event.preventDefault()"
+                >
+                  <i class="bi bi-geo-alt-fill me-2"></i>
+                  <div class="suggestion-content">
+                    <div class="suggestion-main">{{ suggestion.properties.formatted }}</div>
+                    <div class="suggestion-details" *ngIf="suggestion.properties.city || suggestion.properties.country">
+                      {{ suggestion.properties.city }}{{ suggestion.properties.city && suggestion.properties.country ? ', ' : '' }}{{ suggestion.properties.country }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <small class="text-muted">
+            <i class="bi bi-info-circle me-1"></i>Sélectionnez une adresse dans la liste pour une localisation précise
+          </small>
+          <div *ngIf="employeForm.latitude && employeForm.longitude" class="mt-2 text-success small">
+            <i class="bi bi-check-circle-fill me-1"></i>Localisation détectée : {{ employeForm.latitude.toFixed(4) }}, {{ employeForm.longitude.toFixed(4) }}
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Affichage du profil (mode lecture) -->
+    <div *ngIf="!editing" class="profile-body">
+      <section class="profile-section position-relative">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="section-title mb-0">
+            <i class="bi bi-person-lines-fill me-2"></i>Informations personnelles
+          </h5>
+          <button class="btn btn-sm btn-outline-primary" (click)="editSection('infos')" title="Modifier">
+            <i class="bi bi-pencil me-1"></i>Modifier
+          </button>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <strong>Nom :</strong>
+            <p>{{ employe?.nom || 'Non renseigné' }}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Prénom :</strong>
+            <p>{{ employe?.prenom || 'Non renseigné' }}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Email :</strong>
+            <p>{{ employe?.email || 'Non renseigné' }}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Téléphone :</strong>
+            <p>{{ employe?.telephone || 'Non renseigné' }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-section position-relative">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="section-title mb-0">
+            <i class="bi bi-briefcase me-2"></i>Informations professionnelles
+          </h5>
+          <button class="btn btn-sm btn-outline-primary" (click)="editSection('pro')" title="Modifier">
+            <i class="bi bi-pencil me-1"></i>Modifier
+          </button>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <strong>Domaine principal :</strong>
+            <p>{{ employe?.domainePrincipal || 'Non spécifié' }}</p>
+          </div>
+          <div class="col-md-6">
+            <strong>Années d'expérience :</strong>
+            <p>{{ employe?.anneesExperience || 0 }} an(s)</p>
+          </div>
+          <div class="col-12">
+            <strong>Disponibilité :</strong>
+            <p>
+              <span [class]="employe?.disponibilite ? 'badge bg-success' : 'badge bg-secondary'">
+                {{ employe?.disponibilite ? 'Disponible immédiatement' : 'Non disponible' }}
+              </span>
+            </p>
+          </div>
+          <div class="col-12" *ngIf="employe?.documentsCertifications">
+            <strong>Documents / Certifications :</strong>
+            <p>{{ employe?.documentsCertifications }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-section position-relative" *ngIf="employe?.adresse">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="section-title mb-0">
+            <i class="bi bi-geo-alt me-2"></i>Localisation
+          </h5>
+          <button class="btn btn-sm btn-outline-primary" (click)="editSection('localisation')" title="Modifier">
+            <i class="bi bi-pencil me-1"></i>Modifier
+          </button>
+        </div>
+        <p class="section-text">
+          <i class="bi bi-geo-alt-fill me-2"></i>{{ employe?.adresse }}
+        </p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Modals pour l'édition des sections -->
+<!-- Modal Informations personnelles -->
+<div *ngIf="editingSection === 'infos'" class="modal fade show d-block" style="background-color: rgba(0,0,0,0.5);" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier les informations personnelles</h5>
+        <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nom <span class="text-danger">*</span></label>
+            <input type="text" [(ngModel)]="employeForm.nom" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Prénom <span class="text-danger">*</span></label>
+            <input type="text" [(ngModel)]="employeForm.prenom" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email <span class="text-danger">*</span></label>
+            <input type="email" [(ngModel)]="employeForm.email" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Téléphone <span class="text-danger">*</span></label>
+            <input type="text" [(ngModel)]="employeForm.telephone" class="form-control" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Nouveau mot de passe</label>
+            <input type="password" [(ngModel)]="employeForm.password" class="form-control" placeholder="Laissez vide pour ne pas changer" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="saveSection('infos')" [disabled]="loading">
+          {{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Informations professionnelles -->
+<div *ngIf="editingSection === 'pro'" class="modal fade show d-block" style="background-color: rgba(0,0,0,0.5);" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier les informations professionnelles</h5>
+        <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Domaine principal <span class="text-danger">*</span></label>
+            <input type="text" [(ngModel)]="employeForm.domainePrincipal" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Années d'expérience <span class="text-danger">*</span></label>
+            <input type="number" [(ngModel)]="employeForm.anneesExperience" class="form-control" min="0" required />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Bio / Description</label>
+            <textarea [(ngModel)]="employeForm.bio" class="form-control" rows="4"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Documents / Certifications</label>
+            <input type="text" [(ngModel)]="employeForm.documentsCertifications" class="form-control" />
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input type="checkbox" [(ngModel)]="employeForm.disponibilite" class="form-check-input" id="disponibilite" />
+              <label class="form-check-label" for="disponibilite">Disponible immédiatement</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="saveSection('pro')" [disabled]="loading">
+          {{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Localisation -->
+<div *ngIf="editingSection === 'localisation'" class="modal fade show d-block" style="background-color: rgba(0,0,0,0.5);" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier la localisation</h5>
+        <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group autocomplete-container">
+          <label class="form-label">Adresse complète</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              [(ngModel)]="employeForm.adresse" 
+              class="form-control address-autocomplete"
+              autocomplete="off"
+              placeholder="Commencez à taper votre adresse (min 3 caractères)"
+              (input)="onAddressInput($event)"
+              (focus)="showSuggestions = true"
+              (blur)="hideSuggestions()"
+            />
+            <div *ngIf="showSuggestions || loadingSuggestions" class="suggestions-dropdown" (mousedown)="$event.preventDefault()">
+              <div *ngIf="loadingSuggestions" class="suggestion-loading">
+                <i class="bi bi-arrow-repeat spin me-2"></i>Recherche en cours...
+              </div>
+              <div *ngIf="!loadingSuggestions && suggestions.length === 0" class="suggestion-empty">
+                <i class="bi bi-info-circle me-2"></i>Aucune adresse trouvée
+              </div>
+              <div *ngIf="!loadingSuggestions && suggestions.length > 0">
+                <div 
+                  *ngFor="let suggestion of suggestions" 
+                  class="suggestion-item"
+                  (click)="selectAddress(suggestion)"
+                  (mousedown)="$event.preventDefault()"
+                >
+                  <i class="bi bi-geo-alt-fill me-2"></i>
+                  <div class="suggestion-content">
+                    <div class="suggestion-main">{{ suggestion.properties.formatted }}</div>
+                    <div class="suggestion-details" *ngIf="suggestion.properties.city || suggestion.properties.country">
+                      {{ suggestion.properties.city }}{{ suggestion.properties.city && suggestion.properties.country ? ', ' : '' }}{{ suggestion.properties.country }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="employeForm.latitude && employeForm.longitude" class="mt-2 text-success small">
+            <i class="bi bi-check-circle-fill me-1"></i>Localisation détectée : {{ employeForm.latitude.toFixed(4) }}, {{ employeForm.longitude.toFixed(4) }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="saveSection('localisation')" [disabled]="loading">
+          {{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 

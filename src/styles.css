@@ -1,1 +1,679 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Import Bootstrap Icons */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+
+/* Variables CSS globales pour la palette de couleurs */
+:root {
+  --primary-color: #4a5568;
+  --primary-light: #6b7280;
+  --primary-dark: #2d3748;
+  --secondary-color: #e8ecf0;
+  --accent-color: #718096;
+  --light-accent: #f7fafc;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --success-color: #48bb78;
+  --warning-color: #ed8936;
+  --danger-color: #f56565;
+  --info-color: #4299e1;
+  --background-color: #f7fafc;
+}
+
+/* Reset et styles de base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles pour les pages - harmonisation des couleurs */
+.page-container {
+  background-color: white;
+  min-height: calc(100vh - 80px);
+  padding: 0;
+}
+
+/* En-têtes de pages harmonisés */
+.page-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  box-shadow: 0 2px 10px rgba(45, 55, 72, 0.1);
+}
+
+.page-header h1 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Cartes harmonisées - Design moderne LinkedIn-like */
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  background: white;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.card-header {
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 1.25rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Espacement moderne entre les sections */
+.section-spacing {
+  margin-bottom: 2rem;
+}
+
+.section-spacing-lg {
+  margin-bottom: 3rem;
+}
+
+/* Cartes de profil modernes */
+.profile-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.profile-card-header {
+  background: var(--primary-color);
+  height: 80px;
+  position: relative;
+}
+
+.profile-card-body {
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid white;
+  margin: 0 auto 1rem;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cartes de contenu avec espacement généreux */
+.content-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.content-card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: white;
+}
+
+.content-card-body {
+  padding: 1.5rem;
+}
+
+/* Espacement des listes modernes */
+.modern-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modern-list-item {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modern-list-item:last-child {
+  border-bottom: none;
+}
+
+.modern-list-item:hover {
+  background-color: var(--light-accent);
+  transform: translateX(4px);
+}
+
+/* Espacement des grilles modernes */
+.modern-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.modern-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.modern-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.modern-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.modern-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+/* Espacement des conteneurs */
+.container-modern {
+  padding: 2rem 1.5rem;
+}
+
+.container-modern-sm {
+  padding: 1.5rem 1rem;
+}
+
+/* Sidebar moderne */
+.sidebar-modern {
+  padding: 1.5rem 1rem;
+  background: var(--background-color);
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-modern .profile-card {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-modern .content-card {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-modern .content-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Boutons harmonisés */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 85, 104, 0.2);
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: white;
+}
+
+.btn-info {
+  background: var(--info-color);
+  color: white;
+}
+
+.btn-warning {
+  background: var(--warning-color);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--danger-color);
+  color: white;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Badges harmonisés */
+.badge {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.bg-primary {
+  background: var(--primary-color) !important;
+}
+
+.bg-success {
+  background: var(--success-color) !important;
+}
+
+.bg-info {
+  background: var(--info-color) !important;
+}
+
+.bg-warning {
+  background: var(--warning-color) !important;
+}
+
+.bg-danger {
+  background: var(--danger-color) !important;
+}
+
+/* Formulaires harmonisés */
+.form-control {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(74, 85, 104, 0.15);
+  background-color: white;
+}
+
+.form-select {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(74, 85, 104, 0.15);
+}
+
+/* Alertes harmonisées */
+.alert {
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+}
+
+.alert-info {
+  background: var(--light-accent);
+  color: var(--primary-color);
+  border-left: 4px solid var(--info-color);
+}
+
+.alert-success {
+  background: #f0fff4;
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+.alert-warning {
+  background: #fffaf0;
+  color: var(--warning-color);
+  border-left: 4px solid var(--warning-color);
+}
+
+.alert-danger {
+  background: #fff5f5;
+  color: var(--danger-color);
+  border-left: 4px solid var(--danger-color);
+}
+
+/* Listes harmonisées */
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.list-group-item:hover {
+  background-color: var(--light-accent);
+  transform: translateX(5px);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* Navigation harmonisée */
+.nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0 0.25rem;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+  background-color: var(--light-accent);
+}
+
+.nav-link.active {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  font-weight: 600;
+}
+
+/* Pagination harmonisée */
+.pagination .page-link {
+  color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin: 0 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--light-accent);
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+/* Jumbotron harmonisé */
+.jumbotron {
+  background: var(--primary-dark);
+  color: white;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(45, 55, 72, 0.1);
+}
+
+/* Statistiques harmonisées */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--primary-color);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-accent);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Améliorations modernes supplémentaires */
+.modern-spacing {
+  margin-bottom: 2rem;
+}
+
+.modern-spacing-lg {
+  margin-bottom: 3rem;
+}
+
+.modern-spacing-xl {
+  margin-bottom: 4rem;
+}
+
+/* Effets de survol modernes */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Ombres modernes */
+.shadow-soft {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-strong {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Bordures modernes */
+.border-modern {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.border-modern-lg {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+}
+
+/* Espacement des textes */
+.text-spacing {
+  line-height: 1.7;
+}
+
+.text-spacing-tight {
+  line-height: 1.4;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.5rem 0;
+  }
+  
+  .jumbotron {
+    padding: 2rem 1rem;
+  }
+  
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+  
+  .modern-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .container-modern {
+    padding: 1rem;
+  }
+  
+  .sidebar-modern {
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* Leaflet Map Styles */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Fix pour les icônes Leaflet par défaut */
+.leaflet-default-icon-path {
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png');
+}
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Helpers responsives globaux */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+.wrap-text {
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.no-horizontal-scroll {
+  overflow-x: hidden;
+}
+.container-fluid,
+.container-modern,
+.page-container {
+  max-width: 100vw;
+}
+
+/* Renforts responsive */
+@media (max-width: 992px) {
+  .container-modern { padding: 1.25rem 1rem; }
+}
+@media (max-width: 768px) {
+  .container-modern { padding: 1rem 0.75rem; }
+  .modern-grid-4, .modern-grid-3, .modern-grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .card-body { padding: 1rem; }
+  .card-header { padding: 0.9rem 1rem; }
+}
+
+/* Leaflet Map Styles */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Fix pour les icônes Leaflet par défaut */
+.leaflet-default-icon-path {
+  background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png');
+}
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Helpers responsives globaux */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+.wrap-text {
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.no-horizontal-scroll {
+  overflow-x: hidden;
+}
+.container-fluid,
+.container-modern,
+.page-container {
+  max-width: 100vw;
+}
+
+/* Renforts responsive */
+@media (max-width: 992px) {
+  .container-modern { padding: 1.25rem 1rem; }
+}
+@media (max-width: 768px) {
+  .container-modern { padding: 1rem 0.75rem; }
+  .modern-grid-4, .modern-grid-3, .modern-grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .card-body { padding: 1rem; }
+  .card-header { padding: 0.9rem 1rem; }
+}

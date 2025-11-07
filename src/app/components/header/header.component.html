@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg modern-header">
+  <div class="container-fluid">
+    <!-- Logo et nom de l'application -->
+    <div class="navbar-brand d-flex align-items-center">
+      <i class="bi bi-geo-alt-fill text-white me-2 fs-4"></i>
+      <span class="text-white fw-bold fs-4">EdoGne</span>
+    </div>
+
+    <!-- Barre de recherche centrée -->
+    <form class="d-flex flex-grow-1 justify-content-center mx-4" role="search">
+      <div class="input-group search-container">
+        <input class="form-control" type="search" placeholder="Rechercher..." aria-label="Search" />
+        <button class="btn btn-light" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <!-- Navigation horizontale -->
+    <div class="navbar-nav d-flex flex-row">
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="accueil" routerLinkActive="active">
+        <i class="bi bi-house-door-fill "></i>
+        <small>Accueil</small>
+      </a>
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="emplois" routerLinkActive="active" *ngIf="isAuthenticated">
+        <i class="bi bi-briefcase-fill "></i>
+        <small>Emplois</small>
+      </a>
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="notifications" routerLinkActive="active" *ngIf="isAuthenticated">
+        <i class="bi bi-bell-fill "></i>
+        <small>Notifications</small>
+      </a>
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="messages" routerLinkActive="active" *ngIf="isAuthenticated">
+        <i class="bi bi-chat-dots-fill "></i>
+        <small>Messages</small>
+      </a>
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="carte" routerLinkActive="active" *ngIf="isAuthenticated">
+        <i class="bi bi-map-fill "></i>
+        <small>Carte</small>
+      </a>
+    </div>
+
+    <!-- Actions à droite selon auth -->
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-warning btn-sm premium-btn">Premium</button>
+      <!-- Affiché si NON connecté -->
+      <ng-container *ngIf="!isAuthenticated">
+        <a class="btn btn-outline-light fw-bold" routerLink="/connexion">Se connecter</a>
+        <a class="btn btn-primary fw-bold ms-2" routerLink="/creer-compte">Créer un compte</a>
+      </ng-container>
+      <!-- Affiché si auth -->
+      <div class="dropdown" *ngIf="isAuthenticated">
+        <button class="btn btn-link text-white d-flex align-items-center profile-btn" type="button" data-bs-toggle="dropdown">
+          <img [src]="photoProfil || 'assets/images/LUM3.jpg'" class="rounded-circle me-2" alt="Profile" style="width: 28px; height: 28px; object-fit: cover;">
+          <span class="fw-bold text-white me-2">{{ user?.email || 'Profil' }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" [routerLink]="getProfilRoute()"><i class="bi bi-person me-2"></i>Mon profil</a></li>
+          <li><a class="dropdown-item" routerLink="/mes-postulations" *ngIf="userClaims?.role === 'EMPLOYE'"><i class="bi bi-briefcase me-2"></i>Mes postulations</a></li>
+          <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Paramètres</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Toggle pour mobile (inchangé) -->
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+
+       

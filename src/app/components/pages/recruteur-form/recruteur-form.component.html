@@ -1,0 +1,255 @@
+<div class="page-container">
+  <!-- En-tête du formulaire -->
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <h1 class="display-4 mb-3">
+            <i class="bi bi-person-plus-fill me-3"></i>
+            Nouveau Recruteur
+          </h1>
+          <p class="lead mb-0">Ajouter un nouveau recruteur au système</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-modern">
+    <form>
+      <!-- Type de recruteur -->
+      <div class="content-card section-spacing">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Type de Recruteur</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="recruiterType" id="entreprise" value="entreprise">
+                <label class="form-check-label" for="entreprise">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-building text-primary fs-3 me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Entreprise</h6>
+                      <small class="text-muted">Société, organisation</small>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="recruiterType" id="professionnel" value="professionnel">
+                <label class="form-check-label" for="professionnel">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-person-badge text-info fs-3 me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Professionnel</h6>
+                      <small class="text-muted">Recruteur indépendant</small>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="recruiterType" id="particulier" value="particulier">
+                <label class="form-check-label" for="particulier">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-person text-warning fs-3 me-3"></i>
+                    <div>
+                      <h6 class="mb-1">Particulier</h6>
+                      <small class="text-muted">Recruteur occasionnel</small>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Informations générales -->
+      <div class="content-card section-spacing">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Informations Générales</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nom / Nom de l'entreprise *</label>
+              <input type="text" class="form-control" placeholder="Entrez le nom">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email de contact *</label>
+              <input type="email" class="form-control" placeholder="contact@exemple.com">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Téléphone *</label>
+              <input type="tel" class="form-control" placeholder="+228 XX XX XX XX">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Localisation *</label>
+              <input type="text" class="form-control" placeholder="Lomé, Togo">
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" rows="3" placeholder="Décrivez l'entreprise ou le professionnel..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Informations spécifiques selon le type -->
+      <div class="content-card section-spacing" id="entreprise-info" style="display: none;">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Informations Entreprise</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Secteur d'activité</label>
+              <select class="form-select">
+                <option value="">Sélectionnez un secteur</option>
+                <option value="it">Technologies de l'information</option>
+                <option value="finance">Finance</option>
+                <option value="sante">Santé</option>
+                <option value="education">Éducation</option>
+                <option value="commerce">Commerce</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Taille de l'entreprise</label>
+              <select class="form-select">
+                <option value="">Sélectionnez la taille</option>
+                <option value="1-10">1-10 employés</option>
+                <option value="11-50">11-50 employés</option>
+                <option value="51-200">51-200 employés</option>
+                <option value="200+">200+ employés</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Site web</label>
+              <input type="url" class="form-control" placeholder="https://www.exemple.com">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">SIRET / Numéro d'enregistrement</label>
+              <input type="text" class="form-control" placeholder="Numéro d'enregistrement">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card section-spacing" id="professionnel-info" style="display: none;">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Informations Professionnel</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Spécialisation</label>
+              <select class="form-select">
+                <option value="">Sélectionnez une spécialisation</option>
+                <option value="rh">Ressources Humaines</option>
+                <option value="it">Technologies de l'information</option>
+                <option value="finance">Finance</option>
+                <option value="marketing">Marketing</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Années d'expérience</label>
+              <select class="form-select">
+                <option value="">Sélectionnez l'expérience</option>
+                <option value="0-2">0-2 ans</option>
+                <option value="3-5">3-5 ans</option>
+                <option value="6-10">6-10 ans</option>
+                <option value="10+">10+ ans</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Certifications</label>
+              <input type="text" class="form-control" placeholder="Certifications professionnelles">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">LinkedIn</label>
+              <input type="url" class="form-control" placeholder="https://linkedin.com/in/...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-card section-spacing" id="particulier-info" style="display: none;">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Informations Particulier</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Type d'offres</label>
+              <select class="form-select">
+                <option value="">Sélectionnez le type</option>
+                <option value="petits-boulots">Petits boulots</option>
+                <option value="services">Services ponctuels</option>
+                <option value="garde">Garde d'enfants</option>
+                <option value="menage">Ménage</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Zone d'intervention</label>
+              <input type="text" class="form-control" placeholder="Quartier, ville...">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vérification et statut -->
+      <div class="content-card section-spacing">
+        <div class="content-card-header">
+          <h5 class="mb-0 fw-bold">Vérification et Statut</h5>
+        </div>
+        <div class="content-card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Statut de vérification</label>
+              <select class="form-select">
+                <option value="en-attente">En attente</option>
+                <option value="verifie">Vérifié</option>
+                <option value="suspendu">Suspendu</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Niveau d'accès</label>
+              <select class="form-select">
+                <option value="basique">Basique</option>
+                <option value="standard">Standard</option>
+                <option value="premium">Premium</option>
+              </select>
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label">Notes internes</label>
+              <textarea class="form-control" rows="3" placeholder="Notes pour l'équipe..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="d-flex gap-3 justify-content-end">
+        <button type="button" class="btn btn-outline-secondary">
+          <i class="bi bi-x me-2"></i>Annuler
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check me-2"></i>Créer le recruteur
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
