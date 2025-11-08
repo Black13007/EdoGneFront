@@ -9,9 +9,13 @@ import { MessagesComponent } from './components/pages/messages/messages.componen
 import { SeConnecterComponent } from './components/auth/se-connecter/se-connecter.component';
 import { CreerCompteComponent } from './components/auth/creer-compte/creer-compte.component';
 import { AuthGuard } from './security/guards/auth.guard';
+import { RoleGuard } from './security/guards/role.guard';
 import { ProfilComponent } from './components/pages/profil/profil.component';
 import { MesPostulationsComponent } from './components/pages/mes-postulations/mes-postulations.component';
 import { ProfilEmployeurComponent } from './employeur/pages/profil-employeur/profil-employeur.component';
+import { DashboardEmployeurComponent } from './employeur/pages/dashboard-employeur/dashboard-employeur.component';
+import { GestionOffreComponent } from './employeur/pages/gestion-offre/gestion-offre.component';
+import { CandidaturesComponent } from './employeur/pages/candidatures/candidatures.component';
 
 // Imports pour les composants d'authentification
 
@@ -26,6 +30,9 @@ const routes: Routes = [
   {path: 'messages', component:MessagesComponent, canActivate: [AuthGuard]},
   {path: 'profil', component: ProfilComponent, canActivate: [AuthGuard]},
   {path: 'profil-employeur', component: ProfilEmployeurComponent, canActivate: [AuthGuard]},
+  {path: 'employeur/dashboard', component: DashboardEmployeurComponent, canActivate: [AuthGuard, RoleGuard]},
+  {path: 'employeur/gestion-offre', component: GestionOffreComponent, canActivate: [AuthGuard, RoleGuard]},
+  {path: 'employeur/candidatures', component: CandidaturesComponent, canActivate: [AuthGuard, RoleGuard]},
   {path: 'mes-postulations', component: MesPostulationsComponent, canActivate: [AuthGuard]},
   {path: 'connexion', component: SeConnecterComponent},
   {path: 'creer-compte', component: CreerCompteComponent},

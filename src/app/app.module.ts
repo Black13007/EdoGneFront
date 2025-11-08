@@ -18,9 +18,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreerCompteComponent } from './components/auth/creer-compte/creer-compte.component';
 import { SeConnecterComponent } from './components/auth/se-connecter/se-connecter.component';
 import { JwtInterceptor } from './security/interceptors/jwt.interceptor';
+import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-autocomplete';
 import { ProfilComponent } from './components/pages/profil/profil.component';
 import { MesPostulationsComponent } from './components/pages/mes-postulations/mes-postulations.component';
 import { ProfilEmployeurComponent } from './employeur/pages/profil-employeur/profil-employeur.component';
+import { DashboardEmployeurComponent } from './employeur/pages/dashboard-employeur/dashboard-employeur.component';
+import { GestionOffreComponent } from './employeur/pages/gestion-offre/gestion-offre.component';
+import { CandidaturesComponent } from './employeur/pages/candidatures/candidatures.component';
 
 // Composants recruteur
 
@@ -40,6 +44,9 @@ import { ProfilEmployeurComponent } from './employeur/pages/profil-employeur/pro
     ProfilComponent,
     MesPostulationsComponent,
     ProfilEmployeurComponent,
+    DashboardEmployeurComponent,
+    GestionOffreComponent,
+    CandidaturesComponent,
     // Composants d'authentification
     // Composants recruteur
     // RecruiterDashboardComponent,
@@ -52,8 +59,8 @@ import { ProfilEmployeurComponent } from './employeur/pages/profil-employeur/pro
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
-
+    HttpClientModule,
+    GeoapifyGeocoderAutocompleteModule.withConfig('27c2ee6b109847ac89cf13cf5dc792d7')
   ],
   providers: [
     {

@@ -1,1 +1,98 @@
-<p>dashboard-employeur works!</p>
+<div class="container py-3">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 m-0">Tableau de bord Employeur</h2>
+    <div *ngIf="loading" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3"><i class="bi bi-briefcase fs-3 text-primary"></i></div>
+            <div>
+              <div class="text-muted small">Total d'offres</div>
+              <div class="fs-4 fw-semibold">{{ totalOffres }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-white">
+      <h3 class="h6 m-0">Vos offres récentes</h3>
+    </div>
+    <div class="card-body p-0">
+      <ng-container *ngIf="offres.length; else noOffre">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex align-items-center justify-content-between" *ngFor="let o of offres">
+            <div>
+              <div class="fw-semibold">{{ o.titre }}</div>
+              <div class="text-muted small">{{ o.ville }} • {{ o.typeContrat }} • {{ o.salaire | number:'1.0-0' }} CFA</div>
+              <div class="text-muted x-small">Publiée le {{ o.datePublication | date:'shortDate' }}</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-primary">{{ o.nombrePostulations || 0 }} candidatures</span>
+              <button class="btn btn-outline-primary btn-sm" (click)="openDetails(o)"><i class="bi bi-eye"></i> Détails</button>
+              <div class="btn-group">
+                <button (click)="fermerOffre(o.id)" class="btn btn-outline-warning btn-sm">
+                  <i class="bi bi-lock"></i> Fermer
+                </button>
+                <button (click)="reouvrirOffre(o.id)" class="btn btn-outline-success btn-sm">
+                  <i class="bi bi-unlock"></i> Réouvrir
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </ng-container>
+      <ng-template #noOffre>
+        <div class="p-3 text-muted">Aucune offre pour le moment.</div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Panel détails de l'offre sélectionnée -->
+  <div class="card border-0 shadow-sm mt-3" *ngIf="selectedOffre">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+      <div class="fw-semibold">Détails de l'offre: {{ selectedOffre.titre }}</div>
+      <button class="btn btn-sm btn-outline-secondary" (click)="closeDetails()">Fermer</button>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="text-muted small">Ville</div>
+          <div>{{ selectedOffre.ville }}</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="text-muted small">Type de contrat</div>
+          <div>{{ selectedOffre.typeContrat }}</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="text-muted small">Salaire</div>
+          <div>{{ selectedOffre.salaire | number:'1.0-0' }} CFA</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="text-muted small">Date de publication</div>
+          <div>{{ selectedOffre.datePublication | date:'shortDate' }}</div>
+        </div>
+        <div class="col-12">
+          <div class="text-muted small">Domaine</div>
+          <div>{{ selectedOffre.domaine }}</div>
+        </div>
+        <div class="col-12">
+          <div class="text-muted small">Description</div>
+          <div>{{ selectedOffre.description }}</div>
+        </div>
+        <div class="col-12">
+          <div class="text-muted small">Exigences</div>
+          <div>{{ selectedOffre.exigences }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

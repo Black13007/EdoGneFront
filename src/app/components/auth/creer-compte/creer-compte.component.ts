@@ -7,14 +7,15 @@ import Swal from 'sweetalert2';
 import { TypeEmployeur } from '../../../enums/TypeEmployeur';
 
 @Component({
-  standalone: false,
   selector: 'app-creer-compte',
+  standalone: false,
   templateUrl: './creer-compte.component.html',
-  styleUrls: ['./creer-compte.component.css']
+  styleUrl: './creer-compte.component.css'
 })
 export class CreerCompteComponent implements OnInit {
   isEmploye: boolean = true;
   currentStep: number = 1;
+  loading = false;
 
   employe: EmployeRequest = {
     nom: '',
@@ -43,75 +44,120 @@ export class CreerCompteComponent implements OnInit {
     description: '',
   };
 
-  loading = false;
-
   constructor(
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-    this.goToStep(1);
-  }
+  ngOnInit(): void {}
 
-  switchType(isEmploye: boolean): void {
+  switchType(isEmploye: boolean) {
     this.isEmploye = isEmploye;
-    this.currentStep = 1;
+    this.currentStep = 1; // Reset to step 1 when switching type
   }
 
-  goToStep(step: number): void {
-    this.currentStep = step;
-  }
-
-  nextStep(): void {
-    if (this.currentStep < (this.isEmploye ? 2 : 2)) {
+  nextStep() {
+    if (this.validateCurrentStep()) {
       this.currentStep++;
     }
   }
 
-  previousStep(): void {
+  previousStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
     }
   }
 
-  submitEmploye(): void {
+  goToStep(step: number) {
+    // Only allow going back to completed steps
+    if (step < this.currentStep) {
+      this.currentStep = step;
+    }
+  }
+
+  validateCurrentStep(): boolean {
+    if (this.currentStep === 1) {
+      const data = this.isEmploye ? this.employe : this.employeur;
+      if (!data.nom || !data.prenom || !data.email || !data.telephone || !data.password) {
+        this.errorMessage('Veuillez remplir tous les champs obligatoires.');
+        return false;
+      }
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        this.errorMessage('Veuillez entrer une adresse email valide.');
+        return false;
+      }
+      // Basic password validation
+      if (data.password.length < 6) {
+        this.errorMessage('Le mot de passe doit contenir au moins 6 caractères.');
+        return false;
+      }
+    } else if (this.currentStep === 2) {
+      if (this.isEmploye) {
+        if (!this.employe.domainePrincipal || this.employe.anneesExperience === null) {
+          this.errorMessage('Veuillez remplir tous les champs obligatoires.');
+          return false;
+        }
+      } else {
+        if (!this.employeur.typeEmployeur) {
+          this.errorMessage('Veuillez sélectionner un type d\'employeur.');
+          return false;
+        }
+        if (this.employeur.typeEmployeur === 'ENTREPRISE' && !this.employeur.nomEntreprise) {
+          this.errorMessage('Veuillez entrer le nom de l\'entreprise.');
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  submitEmploye() {
+    if (!this.validateCurrentStep()) {
+      return;
+    }
+
     this.loading = true;
     this.authService.registerClient(this.employe).subscribe({
       next: (res) => {
         if (res.information) {
           this.successMessage('Compte employé créé avec succès, veuillez vous connecter.');
         } else {
-          this.errorMessage(res.message || 'Erreur lors de la création du compte employé.');
+          this.errorMessage(res.message || "Erreur lors de la création du compte employé.");
         }
         this.loading = false;
       },
       error: (err) => {
-        this.errorMessage(err?.error?.message || 'Erreur serveur lors de l\'inscription.');
+        this.errorMessage(err?.error?.message || "Erreur serveur lors de l'inscription.");
         this.loading = false;
       }
     });
   }
 
-  submitEmployeur(): void {
+  submitEmployeur() {
+    if (!this.validateCurrentStep()) {
+      return;
+    }
+
     this.loading = true;
     this.authService.registerPrestataire(this.employeur).subscribe({
       next: (res) => {
         if (res.information) {
           this.successMessage('Compte employeur créé avec succès, veuillez vous connecter.');
         } else {
-          this.errorMessage(res.message || 'Erreur lors de la création du compte employeur.');
+          this.errorMessage(res.message || "Erreur lors de la création du compte employeur.");
         }
         this.loading = false;
       },
       error: (err) => {
-        this.errorMessage(err?.error?.message || 'Erreur serveur lors de l\'inscription.');
+        this.errorMessage(err?.error?.message || "Erreur serveur lors de l'inscription.");
         this.loading = false;
       }
     });
   }
 
-  successMessage(message: string): void {
+  successMessage(message: string) {
     Swal.fire({
       icon: 'success',
       title: 'Succès!',
@@ -124,7 +170,7 @@ export class CreerCompteComponent implements OnInit {
     });
   }
 
-  errorMessage(message: string): void {
+  errorMessage(message: string) {
     Swal.fire({
       icon: 'error',
       title: 'Erreur',
@@ -133,4 +179,4 @@ export class CreerCompteComponent implements OnInit {
       confirmButtonColor: '#d33'
     });
   }
-}
+} 

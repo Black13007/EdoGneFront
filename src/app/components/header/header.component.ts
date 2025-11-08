@@ -43,4 +43,27 @@ export class HeaderComponent {
     }
     return '/profil';
   }
+
+  // Helpers de rôle
+  isEmployeur(): boolean {
+    return this.userClaims?.role === 'EMPLOYEUR';
+  }
+
+  isEmploye(): boolean {
+    return this.userClaims?.role === 'EMPLOYE';
+  }
+
+  // Route d'accueil/dashboard selon rôle
+  getDashboardRoute(): string {
+    if (!this.isAuthenticated) {
+      return '/accueil';
+    }
+    if (this.isEmployeur()) {
+      return '/employeur/dashboard';
+    }
+    if (this.isEmploye()) {
+      return '/employe/dashboard';
+    }
+    return '/accueil';
+  }
 }

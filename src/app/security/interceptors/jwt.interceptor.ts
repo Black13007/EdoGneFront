@@ -13,6 +13,11 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Exclure les requêtes vers l'API Geoapify de l'intercepteur JWT
+    if (req.url.includes('api.geoapify.com')) {
+      return next.handle(req);
+    }
+    
     const token = this.authService.getToken();
     if (token) {
       const authReq = req.clone({

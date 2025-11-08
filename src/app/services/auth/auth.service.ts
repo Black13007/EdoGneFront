@@ -108,7 +108,7 @@ export class AuthService {
     if (userClaims?.role === 'EMPLOYE') {
       this.router.navigate(['/employe/dashboard']);
     } else if (userClaims?.role === 'EMPLOYEUR') {
-      this.router.navigate(['/employe/dashboard']);
+      this.router.navigate(['/employeur/dashboard']);
     } else {
       this.router.navigate(['/']);
     }

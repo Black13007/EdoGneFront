@@ -3,17 +3,20 @@
     <div class="register-header">
       <h2 class="register-title">Créer un compte</h2>
       <div class="register-switch">
-        <button type="button"
-                class="btn-switch"
-                [class.active]="isEmploye"
-                (click)="switchType(true)">Employé</button>
-        <button type="button"
-                class="btn-switch"
-                [class.active]="!isEmploye"
-                (click)="switchType(false)">Employeur</button>
+        <button 
+          type="button" 
+          class="btn-switch" 
+          [class.active]="isEmploye" 
+          (click)="switchType(true)">Employé</button>
+        <button 
+          type="button" 
+          class="btn-switch" 
+          [class.active]="!isEmploye" 
+          (click)="switchType(false)">Employeur</button>
       </div>
     </div>
 
+    <!-- Indicateur de progression -->
     <div class="step-indicator">
       <div class="step-item" [class.active]="currentStep >= 1" [class.completed]="currentStep > 1" (click)="goToStep(1)">
         <div class="step-number">1</div>
@@ -25,7 +28,8 @@
         <div class="step-label">Informations professionnelles</div>
       </div>
     </div>
-
+    
+    <!-- Message informatif -->
     <div class="alert alert-info mb-3">
       <i class="bi bi-info-circle me-2"></i>
       <strong>Note :</strong> Vous pourrez compléter votre profil (adresse, bio, documents, etc.) après la création de votre compte.
@@ -33,48 +37,26 @@
 
     <!-- Formulaire Employé -->
     <form *ngIf="isEmploye" (ngSubmit)="currentStep === 2 ? submitEmploye() : nextStep()" class="register-form">
+      
+      <!-- Étape 1: Informations personnelles -->
       <div *ngIf="currentStep === 1" class="step-content">
         <h3 class="step-title">
           <i class="bi bi-person-circle me-2"></i>Informations personnelles
         </h3>
         <div class="row">
           <div class="col">
-            <input type="text"
-                   [(ngModel)]="employe.nom"
-                   name="nomEmp"
-                   required
-                   placeholder="Nom"
-                   class="form-control" />
+            <input type="text" [(ngModel)]="employe.nom" name="nom" required placeholder="Nom" class="form-control" />
           </div>
           <div class="col">
-            <input type="text"
-                   [(ngModel)]="employe.prenom"
-                   name="prenomEmp"
-                   required
-                   placeholder="Prénom"
-                   class="form-control" />
+            <input type="text" [(ngModel)]="employe.prenom" name="prenom" required placeholder="Prénom" class="form-control" />
           </div>
         </div>
-        <input type="email"
-               [(ngModel)]="employe.email"
-               name="emailEmp"
-               required
-               placeholder="Email"
-               class="form-control" />
-        <input type="text"
-               [(ngModel)]="employe.telephone"
-               name="telephoneEmp"
-               required
-               placeholder="Téléphone"
-               class="form-control" />
-        <input type="password"
-               [(ngModel)]="employe.password"
-               name="passwordEmp"
-               required
-               placeholder="Mot de passe"
-               class="form-control" />
+        <input type="email" [(ngModel)]="employe.email" name="email" required placeholder="Email" class="form-control" />
+        <input type="text" [(ngModel)]="employe.telephone" name="telephone" required placeholder="Téléphone" class="form-control" />
+        <input type="password" [(ngModel)]="employe.password" name="password" required placeholder="Mot de passe" class="form-control" />
       </div>
 
+      <!-- Étape 2: Informations professionnelles minimales -->
       <div *ngIf="currentStep === 2" class="step-content">
         <h3 class="step-title">
           <i class="bi bi-briefcase me-2"></i>Informations professionnelles
@@ -87,39 +69,46 @@
           <label class="form-label">
             <i class="bi bi-briefcase me-1"></i>Domaine principal d'activité <span class="text-danger">*</span>
           </label>
-          <input type="text"
-                 [(ngModel)]="employe.domainePrincipal"
-                 name="domainePrincipalEmp"
-                 required
-                 placeholder="Ex: Informatique, Commerce, Bâtiment, Santé..."
-                 class="form-control" />
+          <input 
+            type="text" 
+            [(ngModel)]="employe.domainePrincipal" 
+            name="domainePrincipal" 
+            required 
+            placeholder="Ex: Informatique, Commerce, Bâtiment, Santé..." 
+            class="form-control" 
+          />
         </div>
         <div class="form-group">
           <label class="form-label">
             <i class="bi bi-calendar-check me-1"></i>Années d'expérience <span class="text-danger">*</span>
           </label>
-          <input type="number"
-                 [(ngModel)]="employe.anneesExperience"
-                 name="anneesExperienceEmp"
-                 required
-                 min="0"
-                 placeholder="0 si débutant"
-                 class="form-control" />
+          <input 
+            type="number" 
+            [(ngModel)]="employe.anneesExperience" 
+            name="anneesExperience" 
+            required 
+            min="0" 
+            placeholder="0 si débutant" 
+            class="form-control" 
+          />
           <small class="text-muted">Indiquez 0 si vous êtes débutant</small>
         </div>
       </div>
 
+      <!-- Boutons de navigation -->
       <div class="form-navigation">
-        <button type="button"
-                class="btn btn-outline-secondary"
-                *ngIf="currentStep > 1"
-                (click)="previousStep()">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          *ngIf="currentStep > 1"
+          (click)="previousStep()">
           <i class="bi bi-arrow-left me-1"></i>Précédent
         </button>
-        <button type="submit"
-                class="btn btn-primary btn-next"
-                [class.btn-submit]="currentStep === 2"
-                [disabled]="loading">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-next"
+          [class.btn-submit]="currentStep === 2"
+          [disabled]="loading">
           <span *ngIf="currentStep < 2">
             Suivant <i class="bi bi-arrow-right ms-1"></i>
           </span>
@@ -132,48 +121,26 @@
 
     <!-- Formulaire Employeur -->
     <form *ngIf="!isEmploye" (ngSubmit)="currentStep === 2 ? submitEmployeur() : nextStep()" class="register-form">
+      
+      <!-- Étape 1: Informations personnelles -->
       <div *ngIf="currentStep === 1" class="step-content">
         <h3 class="step-title">
           <i class="bi bi-person-circle me-2"></i>Informations personnelles
         </h3>
         <div class="row">
           <div class="col">
-            <input type="text"
-                   [(ngModel)]="employeur.nom"
-                   name="nomEmpteur"
-                   required
-                   placeholder="Nom"
-                   class="form-control" />
+            <input type="text" [(ngModel)]="employeur.nom" name="nom" required placeholder="Nom" class="form-control" />
           </div>
           <div class="col">
-            <input type="text"
-                   [(ngModel)]="employeur.prenom"
-                   name="prenomEmpteur"
-                   required
-                   placeholder="Prénom"
-                   class="form-control" />
+            <input type="text" [(ngModel)]="employeur.prenom" name="prenom" required placeholder="Prénom" class="form-control" />
           </div>
         </div>
-        <input type="email"
-               [(ngModel)]="employeur.email"
-               name="emailEmpteur"
-               required
-               placeholder="Email"
-               class="form-control" />
-        <input type="text"
-               [(ngModel)]="employeur.telephone"
-               name="telephoneEmpteur"
-               required
-               placeholder="Téléphone"
-               class="form-control" />
-        <input type="password"
-               [(ngModel)]="employeur.password"
-               name="passwordEmpteur"
-               required
-               placeholder="Mot de passe"
-               class="form-control" />
+        <input type="email" [(ngModel)]="employeur.email" name="email" required placeholder="Email" class="form-control" />
+        <input type="text" [(ngModel)]="employeur.telephone" name="telephone" required placeholder="Téléphone" class="form-control" />
+        <input type="password" [(ngModel)]="employeur.password" name="password" required placeholder="Mot de passe" class="form-control" />
       </div>
 
+      <!-- Étape 2: Informations professionnelles minimales -->
       <div *ngIf="currentStep === 2" class="step-content">
         <h3 class="step-title">
           <i class="bi bi-briefcase me-2"></i>Informations professionnelles
@@ -186,10 +153,7 @@
           <label class="form-label">
             <i class="bi bi-building me-1"></i>Type d'employeur <span class="text-danger">*</span>
           </label>
-          <select [(ngModel)]="employeur.typeEmployeur"
-                  name="typeEmployeurEmpteur"
-                  required
-                  class="form-control">
+          <select [(ngModel)]="employeur.typeEmployeur" name="typeEmployeur" required class="form-control">
             <option value="">-- Sélectionnez un type --</option>
             <option value="ENTREPRISE">Entreprise</option>
             <option value="PARTICULIER">Particulier</option>
@@ -199,26 +163,31 @@
           <label class="form-label">
             <i class="bi bi-building me-1"></i>Nom de l'entreprise <span class="text-danger">*</span>
           </label>
-          <input type="text"
-                 [(ngModel)]="employeur.nomEntreprise"
-                 name="nomEntrepriseEmpteur"
-                 required
-                 placeholder="Nom de l'entreprise"
-                 class="form-control" />
+          <input 
+            type="text" 
+            [(ngModel)]="employeur.nomEntreprise" 
+            name="nomEntreprise" 
+            required
+            placeholder="Nom de l'entreprise" 
+            class="form-control" 
+          />
         </div>
       </div>
 
+      <!-- Boutons de navigation -->
       <div class="form-navigation">
-        <button type="button"
-                class="btn btn-outline-secondary"
-                *ngIf="currentStep > 1"
-                (click)="previousStep()">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          *ngIf="currentStep > 1"
+          (click)="previousStep()">
           <i class="bi bi-arrow-left me-1"></i>Précédent
         </button>
-        <button type="submit"
-                class="btn btn-primary btn-next"
-                [class.btn-submit]="currentStep === 2"
-                [disabled]="loading">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-next"
+          [class.btn-submit]="currentStep === 2"
+          [disabled]="loading">
           <span *ngIf="currentStep < 2">
             Suivant <i class="bi bi-arrow-right ms-1"></i>
           </span>

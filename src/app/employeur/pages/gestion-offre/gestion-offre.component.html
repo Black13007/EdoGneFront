@@ -1,1 +1,160 @@
-<p>gestion-offre works!</p>
+<div class="container py-3">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 m-0">Gestion des offres</h2>
+    <div *ngIf="loading" class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <section *ngIf="!loading">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h3 class="h6 m-0">Créer une offre</h3>
+      </div>
+      <div class="card-body">
+        <form class="row g-3" (ngSubmit)="creerOffre()">
+          <div class="col-12 col-md-6">
+            <input [(ngModel)]="form.titre" name="titre" class="form-control" placeholder="Titre" required />
+          </div>
+          <div class="col-6 col-md-3">
+            <input [(ngModel)]="form.ville" name="ville" class="form-control" placeholder="Ville" required />
+          </div>
+          <div class="col-6 col-md-3">
+            <input [(ngModel)]="form.domaine" name="domaine" class="form-control" placeholder="Domaine" required />
+          </div>
+          <div class="col-6 col-md-3">
+            <input [(ngModel)]="form.typeContrat" name="typeContrat" class="form-control" placeholder="Type de contrat" required />
+          </div>
+          <div class="col-6 col-md-3">
+            <input [(ngModel)]="form.salaire" name="salaire" class="form-control" placeholder="Salaire" type="number" />
+          </div>
+          <div class="col-12">
+            <textarea [(ngModel)]="form.description" name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+          </div>
+          <div class="col-12">
+            <textarea [(ngModel)]="form.exigences" name="exigences" class="form-control" rows="2" placeholder="Exigences"></textarea>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-plus-circle"></i> Créer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h3 class="h6 m-0">Vos offres</h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <ng-container *ngIf="offres?.length; else noOffre">
+          <div class="list-group-item" *ngFor="let o of offres">
+            <ng-container *ngIf="editingTrackingId !== o.trackingId; else editBloc">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="fw-semibold">{{ o.titre }}</div>
+                  <div class="text-muted small">{{ o.ville }} • {{ o.typeContrat }} • {{ o.salaire | number:'1.0-0' }} CFA</div>
+                  <div class="text-muted x-small">Publiée le {{ o.datePublication | date:'shortDate' }}</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-primary">{{ o.nombrePostulations || 0 }} candidatures</span>
+                  <button class="btn btn-outline-primary btn-sm" (click)="openDetails(o)"><i class="bi bi-eye"></i> Détails</button>
+                  <div class="btn-group">
+                    <button class="btn btn-outline-secondary btn-sm" (click)="startEdit(o)">
+                      <i class="bi bi-pencil"></i> Modifier
+                    </button>
+                    <button class="btn btn-outline-warning btn-sm" (click)="fermerOffre(o.id)">
+                      <i class="bi bi-lock"></i> Fermer
+                    </button>
+                    <button class="btn btn-outline-success btn-sm" (click)="reouvrirOffre(o.id)">
+                      <i class="bi bi-unlock"></i> Réouvrir
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" (click)="supprimerOffre(o.trackingId)">
+                      <i class="bi bi-trash"></i> Supprimer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #editBloc>
+              <form class="row g-2" (ngSubmit)="saveEdit()">
+                <div class="col-12 col-md-6">
+                  <input [(ngModel)]="editForm!.titre" name="e_titre" class="form-control" placeholder="Titre" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <input [(ngModel)]="editForm!.ville" name="e_ville" class="form-control" placeholder="Ville" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <input [(ngModel)]="editForm!.domaine" name="e_domaine" class="form-control" placeholder="Domaine" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <input [(ngModel)]="editForm!.typeContrat" name="e_typeContrat" class="form-control" placeholder="Type de contrat" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <input [(ngModel)]="editForm!.salaire" name="e_salaire" class="form-control" placeholder="Salaire" type="number" />
+                </div>
+                <div class="col-12">
+                  <textarea [(ngModel)]="editForm!.description" name="e_description" class="form-control" rows="3" placeholder="Description"></textarea>
+                </div>
+                <div class="col-12">
+                  <textarea [(ngModel)]="editForm!.exigences" name="e_exigences" class="form-control" rows="2" placeholder="Exigences"></textarea>
+                </div>
+                <div class="col-12 d-flex gap-2">
+                  <button type="submit" class="btn btn-success btn-sm">
+                    <i class="bi bi-check"></i> Enregistrer
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancelEdit()">
+                    Annuler
+                  </button>
+                </div>
+              </form>
+            </ng-template>
+          </div>
+        </ng-container>
+        <ng-template #noOffre>
+          <div class="p-3 text-muted">Aucune offre trouvée.</div>
+        </ng-template>
+      </div>
+    </div>
+    <!-- Détails de l'offre sélectionnée -->
+    <div class="card border-0 shadow-sm mt-3" *ngIf="selectedOffre">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <div class="fw-semibold">Détails de l'offre: {{ selectedOffre.titre }}</div>
+        <button class="btn btn-sm btn-outline-secondary" (click)="closeDetails()">Fermer</button>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <div class="text-muted small">Ville</div>
+            <div>{{ selectedOffre.ville }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="text-muted small">Type de contrat</div>
+            <div>{{ selectedOffre.typeContrat }}</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="text-muted small">Salaire</div>
+            <div>{{ selectedOffre.salaire | number:'1.0-0' }} CFA</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="text-muted small">Date de publication</div>
+            <div>{{ selectedOffre.datePublication | date:'shortDate' }}</div>
+          </div>
+          <div class="col-12">
+            <div class="text-muted small">Domaine</div>
+            <div>{{ selectedOffre.domaine }}</div>
+          </div>
+          <div class="col-12">
+            <div class="text-muted small">Description</div>
+            <div>{{ selectedOffre.description }}</div>
+          </div>
+          <div class="col-12">
+            <div class="text-muted small">Exigences</div>
+            <div>{{ selectedOffre.exigences }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

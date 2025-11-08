@@ -5,5 +5,11 @@ export interface PostulationResponse {
     statut:string;
     message:string;
     nom : string ;
+    prenom?: string;
+    adresse?: string;
+    latitude?: number;
+    longitude?: number;
+    email?: string;
+    telephone?: string;
     titreOffre : string ;
 }

@@ -3,13 +3,18 @@
   <div class="profile-card">
     <div class="profile-card-header"></div>
     <div class="profile-card-body">
-      <img [src]="photoProfil || 'assets/images/LUM3.jpg'" class="profile-avatar" alt="Profile" style="object-fit: cover;">
+      <img [src]="photoProfil || employeur?.photoProfil || 'assets/images/LUM3.jpg'" class="profile-avatar" alt="Profile" style="object-fit: cover;">
       <h6 class="fw-bold mb-2">{{ displayName }}</h6>
-      <p class="text-muted small mb-2">Étudiant à Ipnet institute of technology</p>
-      <p class="text-muted small mb-3">Togo</p>
-      <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+      <p class="text-muted small mb-1">
+        {{ employeur?.role === 'EMPLOYEUR' ? 'Employeur' : (employeur?.role === 'EMPLOYE' ? 'Employé' : (employeur?.role || '')) }}
+      </p>
+      <p class="text-muted small mb-2" *ngIf="employeur?.email">{{ employeur?.email }}</p>
+      <p class="text-muted small mb-3">
+        <i class="bi bi-geo-alt me-1"></i>{{ employeur?.adresse || '—' }}
+      </p>
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-3" *ngIf="employeur?.role === 'EMPLOYEUR' && employeur?.nomEntreprise">
         <i class="bi bi-building text-muted"></i>
-        <small class="text-muted">Ipnet institute of technology</small>
+        <small class="text-muted">{{ employeur?.nomEntreprise }}</small>
       </div>
       <button class="btn btn-outline-primary btn-sm w-100" [routerLink]="getProfilRoute()">
         <i class="bi bi-plus me-2"></i>Modifier le profil
@@ -18,7 +23,7 @@
   </div>
 
   <!-- Relations Section -->
-  <div class="content-card" *ngIf="userClaims?.role === 'EMPLOYE'">
+  <div class="content-card" *ngIf="employeur?.role === 'EMPLOYE'">
     <div class="content-card-body">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h6 class="mb-0 fw-bold">Postulations</h6>
@@ -34,10 +39,10 @@
   <!-- Premium Section -->
   <div class="content-card">
     <div class="content-card-body text-center">
-      <h6 class="fw-bold mb-2">Développez votre carrière avec Premium</h6>
-      <p class="text-muted small mb-3">Accédez à des fonctionnalités avancées</p>
-      <button class="btn btn-warning btn-sm w-100">
-        <i class="bi bi-envelope me-2"></i>Essayez pendant 1 mois pour 0 CFA
+      <h6 class="fw-bold mb-2">Voir mes candidatures</h6>
+      <p class="text-muted small mb-3">Accédez aux offres d'emplois aux vous avez postulé</p>
+      <button class="btn btn-warning btn-sm w-100" routerLink="mes-postulations">
+        <i class="bi bi-envelope me-2"></i>Mes postulation
       </button>
     </div>
   </div>

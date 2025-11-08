@@ -18,25 +18,34 @@
 
     <!-- Navigation horizontale -->
     <div class="navbar-nav d-flex flex-row">
-      <a class="nav-link d-flex flex-column align-items-center" routerLink="accueil" routerLinkActive="active">
+      <a class="nav-link d-flex flex-column align-items-center" [routerLink]="getDashboardRoute()" routerLinkActive="active">
         <i class="bi bi-house-door-fill "></i>
         <small>Accueil</small>
       </a>
-      <a class="nav-link d-flex flex-column align-items-center" routerLink="emplois" routerLinkActive="active" *ngIf="isAuthenticated">
+      <!-- Liens spécifiques selon rôle -->
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="/emplois" routerLinkActive="active" *ngIf="isAuthenticated && isEmploye()">
         <i class="bi bi-briefcase-fill "></i>
         <small>Emplois</small>
       </a>
-      <a class="nav-link d-flex flex-column align-items-center" routerLink="notifications" routerLinkActive="active" *ngIf="isAuthenticated">
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="/employeur/gestion-offre" routerLinkActive="active" *ngIf="isAuthenticated && isEmployeur()">
+        <i class="bi bi-briefcase-fill "></i>
+        <small>Offres</small>
+      </a>
+      <!-- <a class="nav-link d-flex flex-column align-items-center" routerLink="notifications" routerLinkActive="active" *ngIf="isAuthenticated">
         <i class="bi bi-bell-fill "></i>
         <small>Notifications</small>
       </a>
       <a class="nav-link d-flex flex-column align-items-center" routerLink="messages" routerLinkActive="active" *ngIf="isAuthenticated">
         <i class="bi bi-chat-dots-fill "></i>
         <small>Messages</small>
-      </a>
+      </a> -->
       <a class="nav-link d-flex flex-column align-items-center" routerLink="carte" routerLinkActive="active" *ngIf="isAuthenticated">
         <i class="bi bi-map-fill "></i>
         <small>Carte</small>
+      </a>
+      <a class="nav-link d-flex flex-column align-items-center" routerLink="/employeur/candidatures" routerLinkActive="active" *ngIf="isAuthenticated && isEmployeur()">
+        <i class="bi bi-people-fill "></i>
+        <small>Candidatures</small>
       </a>
     </div>
 
@@ -58,6 +67,10 @@
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" [routerLink]="getProfilRoute()"><i class="bi bi-person me-2"></i>Mon profil</a></li>
           <li><a class="dropdown-item" routerLink="/mes-postulations" *ngIf="userClaims?.role === 'EMPLOYE'"><i class="bi bi-briefcase me-2"></i>Mes postulations</a></li>
+          <!-- Raccourcis employeur -->
+          <li *ngIf="isEmployeur()"><a class="dropdown-item" routerLink="/employeur/dashboard"><i class="bi bi-speedometer2 me-2"></i>Tableau de bord</a></li>
+          <li *ngIf="isEmployeur()"><a class="dropdown-item" routerLink="/employeur/gestion-offre"><i class="bi bi-briefcase me-2"></i>Gérer mes offres</a></li>
+          <li *ngIf="isEmployeur()"><a class="dropdown-item" routerLink="/employeur/candidatures"><i class="bi bi-people me-2"></i>Candidatures</a></li>
           <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Paramètres</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>

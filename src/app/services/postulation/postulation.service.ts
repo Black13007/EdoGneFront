@@ -53,4 +53,17 @@ private apiUrl = `${environment.apiUrl}/postulations`;
       return this.http.delete<GestionError<void>>(`${this.apiUrl}/${trackingId}`);
     }
 
+    // Employer actions
+    acceptPostulation(id: number): Observable<GestionError<string>> {
+      return this.http.post<GestionError<string>>(`${this.apiUrl}/${id}/accept`, {});
+    }
+
+    rejectPostulation(id: number): Observable<GestionError<string>> {
+      return this.http.post<GestionError<string>>(`${this.apiUrl}/${id}/reject`, {});
+    }
+
+    cancelPostulation(id: number): Observable<GestionError<string>> {
+      return this.http.post<GestionError<string>>(`${this.apiUrl}/${id}/cancel`, {});
+    }
+
 }

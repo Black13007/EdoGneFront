@@ -1,1 +1,61 @@
-<p>candidatures works!</p>
+<div class="container my-4">
+  <div class="d-flex align-items-center mb-3">
+    <i class="bi bi-people-fill me-2 fs-4 text-primary"></i>
+    <h2 class="h4 m-0">Candidatures reçues</h2>
+  </div>
+
+  <div class="d-flex justify-content-center py-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="offreSelect" class="col-form-label fw-semibold">Choisir une offre</label>
+          </div>
+          <div class="col">
+            <select id="offreSelect" class="form-select" [(ngModel)]="selectedOffreId" name="offreSelect" (change)="loadPostulations()">
+              <option [ngValue]="null">-- Sélectionner une offre --</option>
+              <option *ngFor="let o of offres" [ngValue]="o.id">{{ o.titre }} - {{ o.ville }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedOffreId">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">Postulations</span>
+          <span class="badge bg-primary">{{ postulations.length || 0 }}</span>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush" *ngIf="postulations.length; else noPostulation">
+            <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let p of postulations">
+              <div class="me-3">
+                <div class="fw-semibold">{{ p.prenom ? (p.prenom + ' ' + p.nom) : p.nom }}</div>
+                <div class="text-muted small">{{ p.titreOffre }}</div>
+                <div class="text-muted small">{{ p.date | date:'short' }}</div>
+                <div class="small mt-1">{{ (p.message || '') | slice:0:120 }}<span *ngIf="(p.message?.length ?? 0) > 120">...</span></div>
+                <span class="badge rounded-pill bg-secondary mt-1">{{ p.statut }}</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-success btn-sm" (click)="accepter(p)"><i class="bi bi-check-lg me-1"></i>Accepter</button>
+                <button class="btn btn-outline-danger btn-sm" (click)="rejeter(p)"><i class="bi bi-x-lg me-1"></i>Rejeter</button>
+              </div>
+            </li>
+          </ul>
+          <ng-template #noPostulation>
+            <div class="p-4 text-center text-muted">
+              <i class="bi bi-inbox me-2"></i>Aucune postulation pour cette offre.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

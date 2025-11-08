@@ -1,3 +1,14 @@
+/* Styles pour la zone de drag & drop CV */
+.border-primary {
+  border-color: #0d6efd !important;
+  border-width: 2px !important;
+}
+
+/* Animation pour le drag & drop */
+[class*="bg-primary"] {
+  transition: all 0.3s ease;
+}
+
 .profile-container {
   width: 100%;
   max-width: 1000px;
@@ -142,6 +153,14 @@
 .suggestion-details {
   font-size: 0.85rem;
   color: #64748b;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.suggestion-details span:not(:last-child)::after {
+  content: ',';
+  margin-left: 0.1rem;
 }
 
 .suggestion-loading,
@@ -310,6 +329,14 @@
 .suggestion-details {
   font-size: 0.85rem;
   color: #64748b;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.suggestion-details span:not(:last-child)::after {
+  content: ',';
+  margin-left: 0.1rem;
 }
 
 .suggestion-loading,

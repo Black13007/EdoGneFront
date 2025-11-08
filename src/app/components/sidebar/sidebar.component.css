@@ -31,16 +31,6 @@
   }
 }
 
-  width: 100%;
-  max-width: 270px;
-  min-width: 200px;
-  background: #4a5568;
-  color: #fff;
-  padding: 1.2rem 0.6rem;
-  border-radius: 15px;
-  box-shadow: 0 2px 8px rgba(44, 66, 123, 0.08);
-  margin: 0 auto;
-}
 .profile-card, .content-card {
   background: #fff;
   color: #2d3748;

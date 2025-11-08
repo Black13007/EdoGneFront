@@ -41,4 +41,21 @@ export class OffreEmploiService {
     return this.http.get<GestionError<OffreEmploiResponse>>(`${this.apiUrl}/${trackingId}`);
   }
 
+  // Employeur-specific
+  getOffresByEmployeur(employeurId: number): Observable<GestionError<OffreEmploiResponse[]>> {
+    return this.http.get<GestionError<OffreEmploiResponse[]>>(`${this.apiUrl}/employeur/${employeurId}`);
+  }
+
+  countOffresByEmployeur(employeurId: number): Observable<GestionError<number>> {
+    return this.http.get<GestionError<number>>(`${this.apiUrl}/count/employeur/${employeurId}`);
+  }
+
+  closeOffre(offreId: number): Observable<GestionError<string>> {
+    return this.http.post<GestionError<string>>(`${this.apiUrl}/${offreId}/close`, {});
+  }
+
+  reopenOffre(offreId: number): Observable<GestionError<string>> {
+    return this.http.post<GestionError<string>>(`${this.apiUrl}/${offreId}/reopen`, {});
+  }
+
 }
